@@ -6,7 +6,8 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-
+//Definerer en masse oplysninger vi skal bruge
+//Kun getters, da vi aldrig skal sette noget, da det står i filen
 public final class Config {
 
   private static String DATABASE_HOST;
@@ -65,6 +66,7 @@ public final class Config {
     return SOLR_CORE;
   }
 
+  //Denne metode henter det hele ind fra en fil
   public static void initializeConfig() throws IOException {
 
     // Init variables to parse JSON

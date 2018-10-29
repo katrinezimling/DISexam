@@ -5,6 +5,7 @@ public final class Encryption {
   public static String encryptDecryptXOR(String rawString) {
 
     // If encryption is enabled in Config.
+    //Selvom vi har implementeret kryptering, kan vi hurtigt slå det fra igen
     if (Config.getEncryption()) {
 
       // The key is predefined and hidden in code

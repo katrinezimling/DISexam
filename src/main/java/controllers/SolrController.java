@@ -12,7 +12,7 @@ import utils.Config;
 public final class SolrController {
 
   private static HttpSolrClient connection;
-
+//Opretter forbindelse
   public SolrController() {
     connection = getConnection();
   }
@@ -53,6 +53,7 @@ public final class SolrController {
       connection = getConnection();
 
     // Search in Solr base on Field and Value
+    //Søgningen er defineret i et bibliotek
     SolrQuery query = new SolrQuery();
     query.set("q", field + ":" + value);
 

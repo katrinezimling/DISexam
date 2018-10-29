@@ -1,5 +1,5 @@
 package com.cbsexam;
-
+//importerer en masse klasser
 import com.google.gson.Gson;
 import controllers.UserController;
 import java.util.ArrayList;
@@ -11,8 +11,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import model.User;
+import utils.Encryption;
 import utils.Log;
-
+//De end-points, der ligger i denne klasse, hører til Path "user"
 @Path("user")
 public class UserEndpoints {
 
@@ -20,16 +21,24 @@ public class UserEndpoints {
    * @param idUser
    * @return Responses
    */
+
+  //Hvert endpoint er herefter defineret som en metode
+  //GET er hvilket http-verbum, den skal reagere på
   @GET
+  //Starter med at sige om den får nogle parametre med ind
   @Path("/{idUser}")
   public Response getUser(@PathParam("idUser") int idUser) {
 
-    // Use the ID to get the user from the controller.
+    // Get the ID and use it to get the user from the controller. Får en bruger ud fra ID
     User user = UserController.getUser(idUser);
 
     // TODO: Add Encryption to JSON
     // Convert the user object to json in order to return the object
+    //Bruger google bibliotek Gson, der spytter json string ud, og returnerer tilbage til brugeren igen
     String json = new Gson().toJson(user);
+
+    //Laver kryptering:
+    json = Encryption.encryptDecryptXOR(json);
 
     // Return the user with the status code 200
     // TODO: What should happen if something breaks down?
@@ -39,9 +48,12 @@ public class UserEndpoints {
   /** @return Responses */
   @GET
   @Path("/")
+  //Henter alle brugere ud af systemet
   public Response getUsers() {
 
     // Write to log that we are here
+    //Level bruges til at definerer hvor vigtig informationen er
+    //Om det skal komme frem eller om det ikke er så vigtigt
     Log.writeLog(this.getClass().getName(), this, "Get all users", 0);
 
     // Get a list of users
@@ -57,6 +69,7 @@ public class UserEndpoints {
 
   @POST
   @Path("/")
+  //Poste til ny bruger, fx hvis man vil oprette en ny bruger
   @Consumes(MediaType.APPLICATION_JSON)
   public Response createUser(String body) {
 
