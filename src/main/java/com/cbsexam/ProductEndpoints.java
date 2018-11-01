@@ -2,6 +2,7 @@ package com.cbsexam;
 
 import cache.ProductCache;
 import com.google.gson.Gson;
+import controllers.DatabaseController;
 import controllers.ProductController;
 import java.util.ArrayList;
 import javax.ws.rs.Consumes;
@@ -45,7 +46,13 @@ public class ProductEndpoints {
   public Response getProducts() {
 
     // Call our controller-layer in order to get the order from the DB
-    ArrayList<Product> products = ProductController.getProducts();
+
+    //Opretter et objekt af productcache, så klassen kan hentes
+    ProductCache productCache = new ProductCache();
+    //Henter getProducts metoden fra ProductCache
+    ArrayList<Product> products = productCache.getProducts(true);
+    //True tjekker listen igennem igen for om, der er kommet ændringer
+
 
     // TODO: Add Encryption to JSON
     // We convert the java object to json with GSON library imported in Maven

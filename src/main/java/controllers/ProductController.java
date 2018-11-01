@@ -121,7 +121,6 @@ public class ProductController {
     } catch (SQLException ex) {
       System.out.println(ex.getMessage());
     }
-
     return products;
   }
 
