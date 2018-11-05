@@ -133,4 +133,15 @@ public class UserController {
     // Return user
     return user;
   }
+
+  public static void delete(int id) {
+    Log.writeLog(UserController.class.getName(), id, "Sletter en bruger i databasen", 0);
+
+    if (dbCon == null) {
+      dbCon = new DatabaseController();
+    }
+    String sql = "DELETE FROM user WHERE id =" + id;
+
+    dbCon.deleteUpdate(sql);
+  }
 }
