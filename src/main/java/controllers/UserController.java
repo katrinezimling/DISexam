@@ -115,7 +115,7 @@ public class UserController {
             + "', '"
             + user.getLastname()
             + "', '"
-            + Hashing.md5(user.getPassword())
+            + Hashing.sha(user.getPassword()) //Sha bruges i stedet for MD5.
             + "', '"
             + user.getEmail()
             + "', "

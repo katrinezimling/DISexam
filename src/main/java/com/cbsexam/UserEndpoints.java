@@ -1,5 +1,6 @@
 package com.cbsexam;
 //importerer en masse klasser
+import cache.UserCache;
 import com.google.gson.Gson;
 import controllers.UserController;
 import java.util.ArrayList;
@@ -57,7 +58,7 @@ public class UserEndpoints {
     Log.writeLog(this.getClass().getName(), this, "Get all users", 0);
 
     // Get a list of users
-    ArrayList<User> users = UserController.getUsers();
+    ArrayList<User> users = userCache.getUsers(true);
 
     // TODO: Add Encryption to JSON
     // Transfer users to json in order to return it to the user
@@ -69,6 +70,10 @@ public class UserEndpoints {
     // Return the users with the status code 200
     return Response.status(200).type(MediaType.APPLICATION_JSON).entity(json).build();
   }
+
+  //Opretter objekt af UserCache, hvilket gør at klassen kan hentes.
+  //Kan hentes i andre klasser, da den ligger udenfor metoden
+  UserCache userCache = new UserCache();
 
   @POST
   @Path("/")

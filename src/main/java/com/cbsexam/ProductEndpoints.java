@@ -14,6 +14,7 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import model.Product;
 import utils.Encryption;
+import utils.Log;
 
 @Path("product")
 public class ProductEndpoints {
@@ -40,15 +41,15 @@ public class ProductEndpoints {
     return Response.status(200).type(MediaType.TEXT_PLAIN_TYPE).entity(json).build();
   }
 
+  //Opretter et objekt af productcache, så klassen kan hentes
+  ProductCache productCache = new ProductCache();
+
   /** @return Responses */
   @GET
   @Path("/")
   public Response getProducts() {
 
     // Call our controller-layer in order to get the order from the DB
-
-    //Opretter et objekt af productcache, så klassen kan hentes
-    ProductCache productCache = new ProductCache();
     //Henter getProducts metoden fra ProductCache
     ArrayList<Product> products = productCache.getProducts(true);
     //True tjekker listen igennem igen for om, der er kommet ændringer
