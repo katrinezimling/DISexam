@@ -51,7 +51,7 @@ public class ProductEndpoints {
 
     // Call our controller-layer in order to get the order from the DB
     //Henter getProducts metoden fra ProductCache
-    ArrayList<Product> products = productCache.getProducts(true);
+    ArrayList<Product> products = productCache.getProducts(false);
     //True tjekker listen igennem igen for om, der er kommet ændringer
 
 
