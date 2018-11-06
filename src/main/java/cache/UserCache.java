@@ -5,7 +5,7 @@ import model.User;
 import utils.Config;
 import java.util.ArrayList;
 
-//TODO: Build this cache and use it.
+//TODO: Build this cache and use it. : FIX
 public class UserCache {
 
     // List of users

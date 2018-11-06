@@ -30,7 +30,7 @@ public class ProductEndpoints {
     // Call our controller-layer in order to get the order from the DB
     Product product = ProductController.getProduct(idProduct);
 
-    // TODO: Add Encryption to JSON
+    // TODO: Add Encryption to JSON : FIX
     // We convert the java object to json with GSON library imported in Maven
     String json = new Gson().toJson(product);
 
@@ -55,7 +55,7 @@ public class ProductEndpoints {
     //True tjekker listen igennem igen for om, der er kommet ændringer
 
 
-    // TODO: Add Encryption to JSON
+    // TODO: Add Encryption to JSON : FIX
     // We convert the java object to json with GSON library imported in Maven
     String json = new Gson().toJson(products);
 

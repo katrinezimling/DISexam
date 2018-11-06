@@ -33,7 +33,7 @@ public class UserEndpoints {
     // Get the ID and use it to get the user from the controller. Får en bruger ud fra ID
     User user = UserController.getUser(idUser);
 
-    // TODO: Add Encryption to JSON
+    // TODO: Add Encryption to JSON : FIX
     // Convert the user object to json in order to return the object
     //Bruger google bibliotek Gson, der spytter json string ud, og returnerer tilbage til brugeren igen
     String json = new Gson().toJson(user);
@@ -60,7 +60,7 @@ public class UserEndpoints {
     // Get a list of users
     ArrayList<User> users = userCache.getUsers(true);
 
-    // TODO: Add Encryption to JSON
+    // TODO: Add Encryption to JSON : FIX
     // Transfer users to json in order to return it to the user
     String json = new Gson().toJson(users);
 
@@ -109,7 +109,7 @@ public class UserEndpoints {
     return Response.status(400).entity("Endpoint not implemented yet").build();
   }
 
-  // TODO: Make the system able to delete users
+  // TODO: Make the system able to delete users : FIX
   @POST
   @Path("/delete/{idUser}")
   public Response deleteUser(@PathParam("idUser") int id) {
