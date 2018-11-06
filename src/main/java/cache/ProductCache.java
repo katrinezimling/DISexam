@@ -26,6 +26,7 @@ public class ProductCache {
     // If we whis to clear cache, we can set force update.
     // Otherwise we look at the age of the cache and figure out if we should update.
     // If the list is empty we also check for new products
+    //
     if (forceUpdate
             //Created time skal være mindre end TimeMillis. TJEK OP
         || ((this.created + this.ttl) <= (System.currentTimeMillis() / 1000L))
@@ -37,6 +38,9 @@ public class ProductCache {
       // Set products for the instance and set created timestamp
       this.products = products;
       this.created = System.currentTimeMillis() / 1000L;
+      //Tester om cache bliver brugt
+      //Denne skal ikke udskrives flere gange
+      System.out.println("Cache bliver ikke brugt");
     }
 
     // Return the documents

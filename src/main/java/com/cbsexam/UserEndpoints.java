@@ -43,9 +43,14 @@ public class UserEndpoints {
 
     // Return the user with the status code 200
     // TODO: What should happen if something breaks down?
-    return Response.status(200).type(MediaType.APPLICATION_JSON_TYPE).entity(json).build();
-  }
 
+    //Lav en try-catch udenom
+   // if (user != null) {
+   //   return Response.status(200).type(MediaType.APPLICATION_JSON_TYPE).entity(json).build();
+   // } else {
+      return Response.status(400).entity("Kunne ikke finde brugeren").build();
+    //}
+            }
   /** @return Responses */
   @GET
   @Path("/")
