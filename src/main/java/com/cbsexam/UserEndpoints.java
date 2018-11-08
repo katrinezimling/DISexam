@@ -3,6 +3,8 @@ package com.cbsexam;
 import cache.UserCache;
 import com.google.gson.Gson;
 import controllers.UserController;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -44,13 +46,17 @@ public class UserEndpoints {
     // Return the user with the status code 200
     // TODO: What should happen if something breaks down?
 
-    //Lav en try-catch udenom
-   // if (user != null) {
-   //   return Response.status(200).type(MediaType.APPLICATION_JSON_TYPE).entity(json).build();
-   // } else {
-      return Response.status(400).entity("Kunne ikke finde brugeren").build();
-    //}
-            }
+    try {
+      if (user != null) {
+        return Response.status(200).type(MediaType.APPLICATION_JSON_TYPE).entity(json).build();
+      } else {
+        return Response.status(400).entity("Kunne ikke finde brugeren").build();
+      }
+    } catch (Exception e) {
+      System.out.println(e.getMessage());
+      return Response.status(500).entity("Der gik noget galt").build();
+    }
+  }
   /** @return Responses */
   @GET
   @Path("/")
