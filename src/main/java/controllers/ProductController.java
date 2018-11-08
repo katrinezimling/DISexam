@@ -99,7 +99,9 @@ public class ProductController {
       dbCon = new DatabaseController();
     }
 
-    // TODO: Use caching layer.
+    // TODO: Use caching layer. FIX
+    //Har ændret det i Endpoint, derfor er det ikke nødvendigt her
+    //Smartere at lave det i Endpoints fremfor Controller. Uddyb
     String sql = "SELECT * FROM product";
 
     ResultSet rs = dbCon.query(sql);

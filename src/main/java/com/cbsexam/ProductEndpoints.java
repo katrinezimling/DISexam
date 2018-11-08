@@ -4,6 +4,8 @@ import cache.ProductCache;
 import com.google.gson.Gson;
 import controllers.DatabaseController;
 import controllers.ProductController;
+
+import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -42,7 +44,8 @@ public class ProductEndpoints {
   }
 
   //Opretter et objekt af productcache, så klassen kan hentes
-  ProductCache productCache = new ProductCache();
+  //En static variable bliver kun instansieres/indlæst 1 gang
+  static ProductCache productCache = new ProductCache();
 
   /** @return Responses */
   @GET
@@ -80,12 +83,13 @@ public class ProductEndpoints {
     // Get the user back with the added ID and return it to the user
     String json = new Gson().toJson(createdProduct);
 
-    // Return the data to the user
-    if (createdProduct != null) {
-      // Return a response with status 200 and JSON as type
-      return Response.status(200).type(MediaType.APPLICATION_JSON_TYPE).entity(json).build();
-    } else {
-      return Response.status(400).entity("Could not create user").build();
+
+      // Return the data to the user
+      if (createdProduct != null) {
+        // Return a response with status 200 and JSON as type
+        return Response.status(200).type(MediaType.APPLICATION_JSON_TYPE).entity(json).build();
+      } else {
+        return Response.status(400).entity("Could not create user").build();
+      }
     }
-  }
 }

@@ -26,7 +26,7 @@ public class ProductCache {
     // If we whis to clear cache, we can set force update.
     // Otherwise we look at the age of the cache and figure out if we should update.
     // If the list is empty we also check for new products
-    //
+    //Opdaterer
     if (forceUpdate
             //Created time skal være mindre end TimeMillis. TJEK OP
         || ((this.created + this.ttl) <= (System.currentTimeMillis() / 1000L))
