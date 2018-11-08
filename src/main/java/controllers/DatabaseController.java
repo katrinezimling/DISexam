@@ -124,4 +124,27 @@ public class DatabaseController {
       e.getErrorCode();
     }
   }
+
+  //Dette hører til login og token
+  public int returnIfDeleted (String sql) {
+
+    // Check if we have a connection
+    if (connection == null)
+      connection = getConnection();
+
+
+    try {
+      // Build the statement as a prepared statement
+      PreparedStatement stmt = connection.prepareStatement(sql);
+
+
+      return stmt.executeUpdate();
+
+
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+
+    return 0;
+  }
 }

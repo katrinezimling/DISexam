@@ -44,7 +44,7 @@ public class UserEndpoints {
     json = Encryption.encryptDecryptXOR(json);
 
     // Return the user with the status code 200
-    // TODO: What should happen if something breaks down?
+    // TODO: What should happen if something breaks down? FIX
 
     try {
       if (user != null) {

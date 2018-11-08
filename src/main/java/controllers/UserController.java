@@ -3,6 +3,11 @@ package controllers;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.exceptions.JWTCreationException;
+import com.sun.javafx.scene.traversal.Algorithm;
+import com.sun.org.apache.xml.internal.security.algorithms.JCEMapper;
 import model.User;
 import utils.Hashing;
 import utils.Log;
@@ -94,6 +99,7 @@ public class UserController {
     return users;
   }
 
+
   public static User createUser(User user) {
 
     // Write in log that we've reach this step
@@ -133,6 +139,20 @@ public class UserController {
     // Return user
     return user;
   }
+/*
+public static int createToken() {
+  try {
+    Algorithm algorithm = Algorithm.HMAC256("secret");
+    String token = JWT.create()
+            .withIssuer("auth0")
+            .sign(algorithm);
+  } catch (JWTCreationException exception) {
+  }return 0;
+}
+
+  public static boolean login() {
+
+  }*/
 
   public static void delete(int id) {
     Log.writeLog(UserController.class.getName(), id, "Sletter en bruger i databasen", 0);
