@@ -38,6 +38,9 @@ public class OrderEndpoints {
     // Return a response with status 200 and JSON as type
     return Response.status(200).type(MediaType.APPLICATION_JSON).entity(json).build();
   }
+  //Opretter objekt af OrderCache, hvilket gør at klassen kan hentes.
+  //Kan hentes i andre klasser, da den ligger udenfor metoden
+  static OrderCache orderCache = new OrderCache();
 
   /** @return Responses */
   @GET
@@ -57,10 +60,6 @@ public class OrderEndpoints {
     // Return a response with status 200 and JSON as type
     return Response.status(200).type(MediaType.TEXT_PLAIN_TYPE).entity(json).build();
   }
-
-  //Opretter objekt af OrderCache, hvilket gør at klassen kan hentes.
-  //Kan hentes i andre klasser, da den ligger udenfor metoden
-  OrderCache orderCache = new OrderCache();
 
   @POST
   @Path("/")

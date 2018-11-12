@@ -112,21 +112,33 @@ public class DatabaseController {
     return result;
   }
 
-  public void deleteUpdate(String sql) {
+  public void deleteUser(String sql) {
     if (connection == null) {
       connection = getConnection();
     }
     try {
       PreparedStatement deleteUser = connection.prepareStatement(sql);
+      deleteUser.executeUpdate();
 
-      deleteUser.executeQuery();
     } catch (SQLException e) {
-      e.getErrorCode();
+      System.out.println(e.getMessage());
+    }
+  }
+
+  public void loginUser(String sql) {
+    if (connection == null) {
+      connection = getConnection();
+    }
+    try {
+      PreparedStatement statement = connection.prepareStatement(sql);
+      statement.executeUpdate();
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
     }
   }
 
   //Dette hører til login og token
-  public int returnIfDeleted (String sql) {
+ /* public int returnIfDeleted (String sql) {
 
     // Check if we have a connection
     if (connection == null)
@@ -147,4 +159,5 @@ public class DatabaseController {
 
     return 0;
   }
+  */
 }

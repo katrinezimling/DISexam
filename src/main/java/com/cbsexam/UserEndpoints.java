@@ -2,6 +2,7 @@ package com.cbsexam;
 //importerer en masse klasser
 import cache.UserCache;
 import com.google.gson.Gson;
+import com.sun.org.apache.regexp.internal.RE;
 import controllers.UserController;
 
 import java.sql.SQLException;
@@ -57,6 +58,10 @@ public class UserEndpoints {
       return Response.status(500).entity("Der gik noget galt").build();
     }
   }
+  //Opretter objekt af UserCache, hvilket gør at klassen kan hentes.
+  //Kan hentes i andre klasser, da den ligger udenfor metoden
+  //static, da den skal hentes en gang
+  static UserCache userCache = new UserCache();
   /** @return Responses */
   @GET
   @Path("/")
@@ -69,7 +74,7 @@ public class UserEndpoints {
     Log.writeLog(this.getClass().getName(), this, "Get all users", 0);
 
     // Get a list of users
-    ArrayList<User> users = userCache.getUsers(true);
+    ArrayList<User> users = userCache.getUsers(false);
 
     // TODO: Add Encryption to JSON : FIX
     // Transfer users to json in order to return it to the user
@@ -81,10 +86,6 @@ public class UserEndpoints {
     // Return the users with the status code 200
     return Response.status(200).type(MediaType.APPLICATION_JSON).entity(json).build();
   }
-
-  //Opretter objekt af UserCache, hvilket gør at klassen kan hentes.
-  //Kan hentes i andre klasser, da den ligger udenfor metoden
-  UserCache userCache = new UserCache();
 
   @POST
   @Path("/")
@@ -114,25 +115,35 @@ public class UserEndpoints {
   @POST
   @Path("/login")
   @Consumes(MediaType.APPLICATION_JSON)
-  public Response loginUser(String x) {
+  public Response loginUser(String body) {
 
-    // Return a response with status 200 and JSON as type
-    return Response.status(400).entity("Endpoint not implemented yet").build();
+    User user = new Gson().fromJson(body, User.class);
+    String token = UserController.loginUser(user);
+
+    if (token != "") {
+      return Response.status(200).type(MediaType.APPLICATION_JSON_TYPE).entity(token).build();
+    } else {
+      // Return a response with status 200 and JSON as type
+      return Response.status(400).entity("Could not create user").build();
+    }
   }
 
   // TODO: Make the system able to delete users : FIX
   @POST
   @Path("/delete/{idUser}")
-  public Response deleteUser(@PathParam("idUser") int id) {
+  public Response deleteUser(User user) {
 
-    UserController.delete(id);
+    UserController.deleteUser(user);
 
-    // Return a response with status 200 and JSON as type
-    return Response.status(400).entity("Endpoint not implemented yet").build();
+    if (user.getId() != 0) {
+      return Response.status(200).entity("Brugernummer:" + user.getId() + "er nu slettet fra programmet").build();
+    } else {
+      return Response.status(400).entity("Denne bruger findes ikke i systemet").build();
+    }
   }
 
   // TODO: Make the system able to update users
-  public Response updateUser(String x) {
+  public Response updateUser(String body) {
 
     // Return a response with status 200 and JSON as type
     return Response.status(400).entity("Endpoint not implemented yet").build();
