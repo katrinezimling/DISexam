@@ -7,11 +7,7 @@ import controllers.UserController;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
-import javax.ws.rs.Consumes;
-import javax.ws.rs.GET;
-import javax.ws.rs.POST;
-import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import model.User;
@@ -129,11 +125,12 @@ public class UserEndpoints {
   }
 
   // TODO: Make the system able to delete users : FIX
-  @POST
-  @Path("/delete/{idUser}")
-  public Response deleteUser(User user) {
+  @DELETE
+  @Path("/delete/")
+  public Response deleteUser(String token) {
 
-    UserController.deleteUser(user);
+    //Sender en token med i stedet for User
+    UserController.deleteUser(token);
 
     if (user.getId() != 0) {
       return Response.status(200).entity("Brugernummer:" + user.getId() + "er nu slettet fra programmet").build();

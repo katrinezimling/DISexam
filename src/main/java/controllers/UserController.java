@@ -175,7 +175,7 @@ public class UserController {
           try {
             Algorithm algorithm = Algorithm.HMAC256("secret");
             token = JWT.create()
-                    .withClaim("userId", user.getId())
+                    .withClaim("userId", userlogin.getId())
                     .withIssuer("auth0")
                     .sign(algorithm);
           } catch (JWTCreationException exception) {
@@ -193,17 +193,20 @@ public class UserController {
     return "";
   }
 
-  public static void deleteUser(User user) {
+  public static void deleteUser(String token) {
 
     if (dbCon == null) {
       dbCon = new DatabaseController();
     }
-    String sql = "DELETE FROM user WHERE id =" + user.getId();
+    //Decode - laver det om til noget man forstår
+    DecodedJWT jwt = null;
+
+    String sql = "DELETE FROM user WHERE id = " + user.getId();
 
     String token = user.getToken();
 
     dbCon.deleteUser(sql);
-
+//Decoder token. Vil trykke jwt ud og deklarerer den udenfor try
 try {
     Algorithm algorithm = Algorithm.HMAC256("secret");
     JWTVerifier verifier = JWT.require(algorithm)
