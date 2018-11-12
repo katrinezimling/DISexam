@@ -7,11 +7,8 @@ import com.auth0.jwt.JWT;
 import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.exceptions.JWTCreationException;
-import com.auth0.jwt.JWT;
-import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
-import com.mysql.cj.protocol.Resultset;
 import model.User;
 import utils.Hashing;
 import utils.Log;
@@ -157,7 +154,7 @@ public class UserController {
     //Do the query
     ResultSet resultset = dbCon.query(sql);
 
-    User userlogin = null;
+    User userlogin;
     String token = null;
 
 //Når man logger en bruger ind, skal man have alle informationerne med
@@ -188,38 +185,31 @@ public class UserController {
         System.out.println("No user found");
       }
     } catch (SQLException e) {
-      e.printStackTrace();
+      System.out.println(e.getMessage());
     }
     return "";
   }
 
-  public static void deleteUser(String token) {
+  public static boolean deleteUser(String token) {
 
     if (dbCon == null) {
       dbCon = new DatabaseController();
     }
     //Decode - laver det om til noget man forstår
     DecodedJWT jwt = null;
+    try {
+      Algorithm algorithm = Algorithm.HMAC256("secret");
+      JWTVerifier verifier = JWT.require(algorithm)
+              .withIssuer("auth0")
+              .build(); //Reusable verifier instance
+      jwt = verifier.verify(token);
 
-    String sql = "DELETE FROM user WHERE id = " + user.getId();
+    } catch (JWTVerificationException exception){
+      //Invalid signature/claims
+    }
 
-    String token = user.getToken();
+    String sql = "DELETE FROM user WHERE id = " + jwt.getClaim("userId").asInt();
 
-    dbCon.deleteUser(sql);
-//Decoder token. Vil trykke jwt ud og deklarerer den udenfor try
-try {
-    Algorithm algorithm = Algorithm.HMAC256("secret");
-    JWTVerifier verifier = JWT.require(algorithm)
-            .withIssuer("auth0")
-            .withClaim("userId", user.getId())
-            .build(); //Reusable verifier instance
-    DecodedJWT jwt = verifier.verify(token);
+    return dbCon.deleteUser(sql);
 
-  } catch (JWTVerificationException exception){
-    //Invalid signature/claims
-  }
-  finally {
-  dbCon.deleteUser(sql);
-  }
-
-}}
+  }}

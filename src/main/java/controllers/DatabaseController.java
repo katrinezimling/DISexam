@@ -112,7 +112,7 @@ public class DatabaseController {
     return result;
   }
 
-  public void deleteUser(String sql) {
+  public boolean deleteUser(String sql) {
     if (connection == null) {
       connection = getConnection();
     }
@@ -123,6 +123,7 @@ public class DatabaseController {
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
+    return false;
   }
 
   public void loginUser(String sql) {

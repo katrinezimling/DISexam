@@ -56,7 +56,8 @@ public class UserEndpoints {
   }
   //Opretter objekt af UserCache, hvilket gør at klassen kan hentes.
   //Kan hentes i andre klasser, da den ligger udenfor metoden
-  //static, da den skal hentes en gang
+  //static, da den skal hentes en gang og knyttes til en bestemt klasse
+  //static giver adgang til klassens metode, uden at der er oprettet en instans af klassen
   static UserCache userCache = new UserCache();
   /** @return Responses */
   @GET
@@ -128,15 +129,14 @@ public class UserEndpoints {
   @DELETE
   @Path("/delete/")
   public Response deleteUser(String token) {
-
     //Sender en token med i stedet for User
-    UserController.deleteUser(token);
 
-    if (user.getId() != 0) {
-      return Response.status(200).entity("Brugernummer:" + user.getId() + "er nu slettet fra programmet").build();
+    if (UserController.deleteUser(token)) {
+      return Response.status(200).entity("Brugeren er slettet fra systemet").build();
     } else {
-      return Response.status(400).entity("Denne bruger findes ikke i systemet").build();
+      return Response.status(400).entity("Brugeren kan ikke findes i systemet").build();
     }
+
   }
 
   // TODO: Make the system able to update users
