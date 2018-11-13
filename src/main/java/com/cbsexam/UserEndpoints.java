@@ -128,6 +128,7 @@ public class UserEndpoints {
   // TODO: Make the system able to delete users : FIX
   @DELETE
   @Path("/delete")
+  //body er inde i User
   public Response deleteUser(String body) {
     //Sender en token med i stedet for User
     User user = new Gson().fromJson(body, User.class);

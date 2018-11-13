@@ -214,7 +214,7 @@ public class UserController {
 
   }
 
-  /*
+/*
   public static String updateUser(String token) {
     if (dbCon == null) {
       dbCon = new DatabaseController();

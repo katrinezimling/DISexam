@@ -119,6 +119,8 @@ public class DatabaseController {
     try {
       PreparedStatement deleteUser = connection.prepareStatement(sql);
       deleteUser.executeUpdate();
+      //hvis der ikke står true, vil den altid udskrive, at brugeren ikke er slettet, selvom den er
+      return true;
 
     } catch (SQLException e) {
       System.out.println(e.getMessage());
