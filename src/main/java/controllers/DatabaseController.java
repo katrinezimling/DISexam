@@ -133,7 +133,10 @@ public class DatabaseController {
       connection = getConnection();
     }
     try {
+      //PreparedStatement executes the SQL query
+      //Skal sætte nogle variable, så bruges PreparedStatement
       PreparedStatement statement = connection.prepareStatement(sql);
+      //Udfører noget i databasen
       statement.executeUpdate();
     } catch (SQLException e) {
       System.out.println(e.getMessage());

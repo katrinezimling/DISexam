@@ -175,10 +175,10 @@ public class UserController {
                     .withClaim("userId", userlogin.getId())
                     .withIssuer("auth0")
                     .sign(algorithm);
+            return token;
           } catch (JWTCreationException exception) {
             System.out.println(exception.getMessage());
-          } finally {
-            return token;
+            return "";
           }
         }
       } else {
@@ -186,6 +186,7 @@ public class UserController {
       }
     } catch (SQLException e) {
       System.out.println(e.getMessage());
+      return "";
     }
     return "";
   }
@@ -214,11 +215,34 @@ public class UserController {
 
   }
 
-/*
-  public static String updateUser(String token) {
+  public static String updateUser(User user, String token) {
     if (dbCon == null) {
       dbCon = new DatabaseController();
     }
+    int userID = dbCon.insert(
+            "UPDATE user SET first_name = " + user.getFirstname() + "SET last_name = " + user.getLastname() + "SET password = " + user.getPassword() + "SET email = " + user.getEmail()+ "VALUES('"
+            + user.getFirstname()
+            + "', '"
+            + user.getLastname()
+            + "', '"
+            + Hashing.sha(user.getPassword()) //Sha bruges i stedet for MD5.
+            + "', '"
+            + user.getEmail()
+            + "', "
+            + user.getCreatedTime()
+            + ")");
+
+    if (userID != 0) {
+      //Update the userid of the user before returning
+      user.setId(userID);
+    } else {
+      // Return null if user has not been inserted into database
+      return null;
+    }
+    // Return user/token
+    return token;
   }
-  */
-}
+
+  }
+
+

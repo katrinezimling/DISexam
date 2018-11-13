@@ -114,6 +114,8 @@ public class UserEndpoints {
   @Consumes(MediaType.APPLICATION_JSON)
   public Response loginUser(String body) {
 
+    //Laver json om, så det kan læses
+    //Laver instans af User-klassen
     User user = new Gson().fromJson(body, User.class);
     String token = UserController.loginUser(user);
 
@@ -140,16 +142,21 @@ public class UserEndpoints {
     }
 
   }
-/*
+
   // TODO: Make the system able to update users
   @POST
   @Path("/update/")
-  public Response updateUser(String token) {
+  public Response updateUser(String body) {
 
-    if (UserController.updateUser(token)){
+    //Laver json om, så det kan læses
+    //Laver instans af User-klassen
+    User user = new Gson().fromJson(body, User.class);
+    String token = UserController.loginUser(user);
+
+    if (token != "") {
       return Response.status(200).entity("Brugeren blev opdateret").build();
     } else {
     // Return a response with status 200 and JSON as type
     return Response.status(400).entity("Brugeren kan ikke findes i systemet").build();
   }
-}*/}
+}}
