@@ -204,7 +204,7 @@ public class UserController {
               .build(); //Reusable verifier instance
       jwt = verifier.verify(token);
 
-    } catch (JWTVerificationException exception){
+    } catch (JWTVerificationException exception) {
       //Invalid signature/claims
     }
 
@@ -212,4 +212,13 @@ public class UserController {
 
     return dbCon.deleteUser(sql);
 
-  }}
+  }
+
+  /*
+  public static String updateUser(String token) {
+    if (dbCon == null) {
+      dbCon = new DatabaseController();
+    }
+  }
+  */
+}

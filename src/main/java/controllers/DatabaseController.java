@@ -138,6 +138,18 @@ public class DatabaseController {
     }
   }
 
+  public void updateUser(String sql) {
+    if (connection == null) {
+      connection = getConnection();
+    }
+    try {
+      PreparedStatement statement = connection.prepareStatement(sql);
+      statement.executeUpdate();
+    } catch (SQLException e) {
+      System.out.println(e.getMessage());
+    }
+  }
+
   //Dette hører til login og token
  /* public int returnIfDeleted (String sql) {
 

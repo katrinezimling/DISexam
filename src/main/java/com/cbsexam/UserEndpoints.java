@@ -127,22 +127,28 @@ public class UserEndpoints {
 
   // TODO: Make the system able to delete users : FIX
   @DELETE
-  @Path("/delete/")
-  public Response deleteUser(String token) {
+  @Path("/delete")
+  public Response deleteUser(String body) {
     //Sender en token med i stedet for User
+    User user = new Gson().fromJson(body, User.class);
 
-    if (UserController.deleteUser(token)) {
+    if (UserController.deleteUser(user.getToken())) {
       return Response.status(200).entity("Brugeren er slettet fra systemet").build();
     } else {
       return Response.status(400).entity("Brugeren kan ikke findes i systemet").build();
     }
 
   }
-
+/*
   // TODO: Make the system able to update users
-  public Response updateUser(String body) {
+  @POST
+  @Path("/update/")
+  public Response updateUser(String token) {
 
+    if (UserController.updateUser(token)){
+      return Response.status(200).entity("Brugeren blev opdateret").build();
+    } else {
     // Return a response with status 200 and JSON as type
-    return Response.status(400).entity("Endpoint not implemented yet").build();
+    return Response.status(400).entity("Brugeren kan ikke findes i systemet").build();
   }
-}
+}*/}
