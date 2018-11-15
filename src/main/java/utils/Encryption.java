@@ -16,7 +16,9 @@ public final class Encryption {
       StringBuilder thisIsEncrypted = new StringBuilder();
 
       // TODO: This is where the magic of XOR is happening. Are you able to explain what is going on?
+      //Kører igennem tekststrengen. Man tager et bogstav af gangen, derfor char.
       for (int i = 0; i < rawString.length(); i++) {
+        //Tager det krypterede bogstav og ligger det ind i en streng
         thisIsEncrypted.append((char) (rawString.charAt(i) ^ key[i % key.length]));
       }
 

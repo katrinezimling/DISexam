@@ -85,7 +85,7 @@ public class UserEndpoints {
   }
 
   @POST
-  @Path("/")
+  @Path("/create")
   //Poste til ny bruger, fx hvis man vil oprette en ny bruger
   @Consumes(MediaType.APPLICATION_JSON)
   public Response createUser(String body) {
@@ -145,15 +145,17 @@ public class UserEndpoints {
 
   // TODO: Make the system able to update users
   @POST
-  @Path("/update/")
+  @Path("/update")
+  @Consumes(MediaType.APPLICATION_JSON)
   public Response updateUser(String body) {
 
     //Laver json om, så det kan læses
     //Laver instans af User-klassen
     User user = new Gson().fromJson(body, User.class);
-    String token = UserController.loginUser(user);
+    //String token = UserController.updateUser(user);
 
-    if (token != "") {
+   if (UserController.updateUser(user, user.getToken())){
+     userCache.getUsers(true);
       return Response.status(200).entity("Brugeren blev opdateret").build();
     } else {
     // Return a response with status 200 and JSON as type

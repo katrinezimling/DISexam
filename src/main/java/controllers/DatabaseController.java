@@ -143,39 +143,17 @@ public class DatabaseController {
     }
   }
 
-  public void updateUser(String sql) {
+  public boolean updateUser(String sql) {
     if (connection == null) {
       connection = getConnection();
     }
     try {
       PreparedStatement statement = connection.prepareStatement(sql);
       statement.executeUpdate();
+      return true;
     } catch (SQLException e) {
       System.out.println(e.getMessage());
     }
+    return false;
   }
-
-  //Dette hører til login og token
- /* public int returnIfDeleted (String sql) {
-
-    // Check if we have a connection
-    if (connection == null)
-      connection = getConnection();
-
-
-    try {
-      // Build the statement as a prepared statement
-      PreparedStatement stmt = connection.prepareStatement(sql);
-
-
-      return stmt.executeUpdate();
-
-
-    } catch (SQLException e) {
-      System.out.println(e.getMessage());
-    }
-
-    return 0;
-  }
-  */
 }

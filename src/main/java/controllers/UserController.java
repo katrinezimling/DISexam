@@ -206,6 +206,7 @@ public class UserController {
       jwt = verifier.verify(token);
 
     } catch (JWTVerificationException exception) {
+      System.out.println(exception.getMessage());
       //Invalid signature/claims
     }
 
@@ -215,34 +216,32 @@ public class UserController {
 
   }
 
-  public static String updateUser(User user, String token) {
+  public static boolean updateUser(User user, String token) {
+    Hashing hashing = new Hashing();
     if (dbCon == null) {
       dbCon = new DatabaseController();
     }
-    int userID = dbCon.insert(
-            "UPDATE user SET first_name = " + user.getFirstname() + "SET last_name = " + user.getLastname() + "SET password = " + user.getPassword() + "SET email = " + user.getEmail()+ "VALUES('"
-            + user.getFirstname()
-            + "', '"
-            + user.getLastname()
-            + "', '"
-            + Hashing.sha(user.getPassword()) //Sha bruges i stedet for MD5.
-            + "', '"
-            + user.getEmail()
-            + "', "
-            + user.getCreatedTime()
-            + ")");
 
-    if (userID != 0) {
-      //Update the userid of the user before returning
-      user.setId(userID);
-    } else {
-      // Return null if user has not been inserted into database
-      return null;
+    DecodedJWT jwt = null;
+
+    try {
+      Algorithm algorithm = Algorithm.HMAC256("secret");
+      JWTVerifier verifier = JWT.require(algorithm)
+              .withIssuer("auth0")
+              .build(); //Reusable verifier instance
+      jwt = verifier.verify(token);
+
+    } catch (JWTVerificationException exception) {
+      System.out.println(exception.getMessage());
     }
-    // Return user/token
-    return token;
-  }
 
+    String sql =
+            "UPDATE user SET first_name = '" + user.getFirstname() + "', last_name ='" + user.getLastname() + "', password = '" + hashing.sha(user.getPassword()) + "', email ='" + user.getEmail()
+                    + "' WHERE id = " + jwt.getClaim("userId").asInt();
+
+    // Return user/token
+    return dbCon.updateUser(sql);
   }
+}
 
 
