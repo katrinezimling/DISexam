@@ -8,7 +8,7 @@ public final class Encryption {
     //Selvom vi har implementeret kryptering, kan vi hurtigt slå det fra igen
     if (Config.getEncryption()) {
 
-      // The key is predefined and hidden in code
+      // Nøgten er predefined og gemt i koden
       // TODO: Create a more complex code and store it somewhere better: FIX
       char[] key = Config.getEncryptionkey();
 
@@ -22,11 +22,11 @@ public final class Encryption {
         thisIsEncrypted.append((char) (rawString.charAt(i) ^ key[i % key.length]));
       }
 
-      // We return the encrypted string
+      // Vi returnerer den krypterede string
       return thisIsEncrypted.toString();
 
     } else {
-      // We return without having done anything
+      // Vi returnerer uden at have gjort noget
       return rawString;
     }
   }

@@ -21,6 +21,10 @@ import utils.Log;
 @Path("product")
 public class ProductEndpoints {
 
+  //Opretter et objekt af productcache, så klassen kan hentes
+  //En static variable bliver kun instansieres/indlæst 1 gang
+  static ProductCache productCache = new ProductCache();
+
   /**
    * @param idProduct
    * @return Responses
@@ -29,43 +33,39 @@ public class ProductEndpoints {
   @Path("/{idProduct}")
   public Response getProduct(@PathParam("idProduct") int idProduct) {
 
-    // Call our controller-layer in order to get the order from the DB
+    // Kalder vores controller lag for at få ordrer fra databasen
     Product product = ProductController.getProduct(idProduct);
 
     // TODO: Add Encryption to JSON : FIX
-    // We convert the java object to json with GSON library imported in Maven
+    // Vi konverterer java objekt til json ved at bruge json biblioteket, som er importeret i Maven
     String json = new Gson().toJson(product);
 
     //Laver kryptering
     json = Encryption.encryptDecryptXOR(json);
 
-    // Return a response with status 200 and JSON as type
+    // Returnerer et svar med en status 200 og en json som type
     return Response.status(200).type(MediaType.TEXT_PLAIN_TYPE).entity(json).build();
   }
-
-  //Opretter et objekt af productcache, så klassen kan hentes
-  //En static variable bliver kun instansieres/indlæst 1 gang
-  static ProductCache productCache = new ProductCache();
 
   /** @return Responses */
   @GET
   @Path("/")
   public Response getProducts() {
 
-    // Call our controller-layer in order to get the order from the DB
+    // Kalder vores controller lag for at få ordrer fra databasen
     //Henter getProducts metoden fra ProductCache
     ArrayList<Product> products = productCache.getProducts(false);
     //True tjekker listen igennem igen for om, der er kommet ændringer
 
 
     // TODO: Add Encryption to JSON : FIX
-    // We convert the java object to json with GSON library imported in Maven
+    // Vi konverterer java objekt til json ved at bruge json biblioteket, som er importeret i Maven
     String json = new Gson().toJson(products);
 
     //Laver kryptering
     json = Encryption.encryptDecryptXOR(json);
 
-    // Return a response with status 200 and JSON as type
+    // Returnerer et svar med en status 200 og en json som type
     return Response.status(200).type(MediaType.TEXT_PLAIN_TYPE).entity(json).build();
   }
 
@@ -74,22 +74,23 @@ public class ProductEndpoints {
   @Consumes(MediaType.APPLICATION_JSON)
   public Response createProduct(String body) {
 
-    // Read the json from body and transfer it to a product class
+    // Læser json fra body og fører det hen til produkt klassen
     Product newProduct = new Gson().fromJson(body, Product.class);
 
-    // Use the controller to add the user
+    // Bruger controller til at tilføje produktet
     Product createdProduct = ProductController.createProduct(newProduct);
 
-    // Get the user back with the added ID and return it to the user
+    // Få bruger tilbage med det tilføjede ID og returnerer det til brugeren
     String json = new Gson().toJson(createdProduct);
 
 
-      // Return the data to the user
+      // Returner data til brugeren the data to the user
       if (createdProduct != null) {
-        // Return a response with status 200 and JSON as type
+        // Returnerer et svar med en status 200 og en json som type
         return Response.status(200).type(MediaType.APPLICATION_JSON_TYPE).entity(json).build();
       } else {
-        return Response.status(400).entity("Could not create user").build();
+        //Returnerer et svar med status 400 og en besked i tekst
+        return Response.status(400).entity("Kunne ikke oprette produkt").build();
       }
     }
 }

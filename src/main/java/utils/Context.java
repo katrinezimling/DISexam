@@ -6,7 +6,7 @@ import javax.servlet.ServletContextListener;
 
 public class Context implements ServletContextListener {
 
-  /** This method is called when the context is first started */
+  /** Denne metode kaldes, når context starter*/
   @Override
   public void contextInitialized(ServletContextEvent servletContextEvent) {
 
@@ -24,7 +24,7 @@ public class Context implements ServletContextListener {
     // Here we can initialize our Logger class and write to our Logging.txt that the system has been
     System.out.println("Context is open");
 
-    // Write to log that we've started the system
+    // Skriv til log at vi starter systemet
     Log.writeLog(this.getClass().getName(), this, "We've started the system", 2);
   }
 
@@ -34,7 +34,7 @@ public class Context implements ServletContextListener {
     // Logging for when the system is stopped
     System.out.println("Context is closed");
 
-    // Write to log that we've closed the system
+    // Skriv til log at vi lukker systemet
     Log.writeLog(this.getClass().getName(), this, "The system has been stopped", 2);
   }
 }

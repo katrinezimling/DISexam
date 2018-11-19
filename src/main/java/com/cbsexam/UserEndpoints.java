@@ -70,7 +70,7 @@ public class UserEndpoints {
     //Om det skal komme frem eller om det ikke er så vigtigt
     Log.writeLog(this.getClass().getName(), this, "Get all users", 0);
 
-    // Get a list of users
+    // Hent listen med brugere
     ArrayList<User> users = userCache.getUsers(false);
 
     // TODO: Add Encryption to JSON : FIX
@@ -80,7 +80,7 @@ public class UserEndpoints {
     //Laver kryptering
     json = Encryption.encryptDecryptXOR(json);
 
-    // Return the users with the status code 200
+    // Returnerer et svar med en status 200 og en json som type
     return Response.status(200).type(MediaType.APPLICATION_JSON).entity(json).build();
   }
 
@@ -101,7 +101,7 @@ public class UserEndpoints {
 
     // Return the data to the user
     if (createUser != null) {
-      // Return a response with status 200 and JSON as type
+      // Returnerer et svar med en status 200 og en json som type
       return Response.status(200).type(MediaType.APPLICATION_JSON_TYPE).entity(json).build();
     } else {
       return Response.status(400).entity("Could not create user").build();
@@ -120,10 +120,11 @@ public class UserEndpoints {
     String token = UserController.loginUser(user);
 
     if (token != "") {
+      //Returnerer et svar med en status 200 og en json som type
       return Response.status(200).type(MediaType.APPLICATION_JSON_TYPE).entity(token).build();
     } else {
-      // Return a response with status 200 and JSON as type
-      return Response.status(400).entity("Could not create user").build();
+      // Returnerer et svar med en status 400 og en tekstbesked
+      return Response.status(400).entity("Kunne ikke logge ind").build();
     }
   }
 
@@ -136,6 +137,7 @@ public class UserEndpoints {
     User user = new Gson().fromJson(body, User.class);
 
     if (UserController.deleteUser(user.getToken())) {
+      //Returnerer et svar med en status 200 og en json som type
       return Response.status(200).entity("Brugeren er slettet fra systemet").build();
     } else {
       return Response.status(400).entity("Brugeren kan ikke findes i systemet").build();
@@ -156,9 +158,10 @@ public class UserEndpoints {
 
    if (UserController.updateUser(user, user.getToken())){
      userCache.getUsers(true);
+     //Returnerer et svar med en status 200 og en json som type
       return Response.status(200).entity("Brugeren blev opdateret").build();
     } else {
-    // Return a response with status 200 and JSON as type
+    // Returnerer et svar med en status 400 og en tekstbesked
     return Response.status(400).entity("Brugeren kan ikke findes i systemet").build();
   }
 }}

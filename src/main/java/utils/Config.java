@@ -80,15 +80,15 @@ public final class Config {
     JsonObject json;
     JsonParser parser = new JsonParser();
 
-    // Read File and store input
+    // Læs filen og opbevar input
     InputStream input = Config.class.getResourceAsStream("/config.json");
     BufferedReader reader = new BufferedReader(new InputStreamReader(input));
 
-    // Go through the lines one by one
+    // Gå gennem linjerne en for en
     StringBuffer stringBuffer = new StringBuffer();
     String str;
 
-    // Read file one line at a time
+    // Læs filen en linje af gangen
     while ((str = reader.readLine()) != null) {
       stringBuffer.append(str);
     }

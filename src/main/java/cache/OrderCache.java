@@ -9,13 +9,13 @@ import java.util.ArrayList;
 //TODO: Build this cache and use it. : FIX
 public class OrderCache {
 
-    // List of orders
+    // Liste med ordre
     private ArrayList<Order> orders;
 
-    // Time cache should live
+    // Den tid cache skal leve i
     private long ttl;
 
-    // Sets when the cache has been created
+    // Indstiller, når cachen er oprettet
     private long created;
 
     public OrderCache() {
@@ -33,7 +33,7 @@ public class OrderCache {
                 || ((this.created + this.ttl) <= (System.currentTimeMillis() / 1000L))
                 || this.orders.isEmpty()) {
 
-            // Get orders from controller, since we wish to update.
+            // Henter ordrer fra controller, da vi ønsker at opdatere
             ArrayList<Order> orders = OrderController.getOrders();
 
             // Set orders for the instance and set created timestamp
@@ -44,7 +44,7 @@ public class OrderCache {
             System.out.println("Cache bliver ikke brugt");
         }
 
-        // Return the documents
+        // Returnerer dokumenterne
         return this.orders;
     }
 }

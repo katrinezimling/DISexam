@@ -17,12 +17,12 @@ public class LineItemController {
 
   public static ArrayList<LineItem> getLineItemsForOrder(int orderID) {
 
-    // Check for DB Connection
+    // Tjekker database forbindelsen
     if (dbCon == null) {
       dbCon = new DatabaseController();
     }
 
-    // Construct our SQL
+    // Laver SQL-kald
     String sql = "SELECT * FROM line_item where order_id=" + orderID;
 
     // Do the query and initialize an empty list for the results
@@ -52,16 +52,16 @@ public class LineItemController {
       System.out.println(ex.getMessage());
     }
 
-    // Return the list, which might be empty
+    // Returner listen, which might be empty !! TJEK
     return items;
   }
 
   public static LineItem createLineItem(LineItem lineItem, int orderID) {
 
-    // Write in log that we've reach this step
+    // Skriver i log, at vi er kommet til dette trin
     Log.writeLog(ProductController.class.getName(), lineItem, "Actually creating a line item in DB", 0);
 
-    // Check for DB Connection
+    // Tjekker database forbindelse
     if (dbCon == null) {
       dbCon = new DatabaseController();
     }
@@ -71,7 +71,7 @@ public class LineItemController {
 
     // Update the ID of the product
 
-    // Insert the product in the DB
+    // Indsætter lineItem i databasen
     int lineItemID = dbCon.insert(
         "INSERT INTO line_item(product_id, order_id, price, quantity) VALUES("
             + lineItem.getProduct().getId()
@@ -84,15 +84,15 @@ public class LineItemController {
             + ")");
 
     if (lineItemID != 0) {
-      //Update the productid of the product before returning
+      //Opdaterer ID før de returneres
       lineItem.setId(lineItemID);
     } else{
 
-      // Return null if product has not been inserted into database
+      // Returner null hvis de ikke er blevet indsat i databasen
       return null;
     }
 
-    // Return product
+    // Returner lineItem
     return lineItem;
   }
   

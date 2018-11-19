@@ -7,10 +7,10 @@ import utils.Config;
 
 public class ProductCache {
 
-  // List of products
+  // Liste med produkter
   private ArrayList<Product> products;
 
-  // Time cache should live
+  // Den tid cache skal leve
   private long ttl;
 
   // Sets when the cache has been created
@@ -32,7 +32,7 @@ public class ProductCache {
         || ((this.created + this.ttl) <= (System.currentTimeMillis() / 1000L))
         || this.products.isEmpty()) {
 
-      // Get products from controller, since we wish to update.
+      // Henter produkterne fra controller, da vi vil opdatere
       ArrayList<Product> products = ProductController.getProducts();
 
       // Set products for the instance and set created timestamp
@@ -43,7 +43,7 @@ public class ProductCache {
       System.out.println("Cache bliver ikke brugt");
     }
 
-    // Return the documents
+    // Returner the dokumenterne
     return this.products;
   }
 }

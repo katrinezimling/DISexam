@@ -21,17 +21,17 @@ public class ReviewEndpoints {
   @Path("/title/{title}")
   public Response search(@PathParam("title") String reviewTitle) {
 
-    // Call our controller-layer in order to get the order from the DB
+    // Kalder controller lag for at få ordrer fra databasen
     ArrayList<Review> reviews = ReviewController.searchByTitle(reviewTitle);
 
     // TODO: Add Encryption to JSON : FIX
-    // We convert the java object to json with GSON library imported in Maven
+    // Vi konverterer java objekt til json ved at bruge json biblioteket, som er importeret i Maven
     String json = new Gson().toJson(reviews);
 
     //Laver kryptering
     json = Encryption.encryptDecryptXOR(json);
 
-    // Return a response with status 200 and JSON as type
+    // Returnerer et svar med en status 200 og en json som type
     return Response.status(200).type(MediaType.APPLICATION_JSON).entity(json).build();
   }
 

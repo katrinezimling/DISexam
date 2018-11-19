@@ -129,6 +129,7 @@ public class DatabaseController {
         return false;
     }
 
+    //Slet
     public void loginUser(String sql) {
         if (connection == null) {
             connection = getConnection();

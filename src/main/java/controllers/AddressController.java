@@ -15,12 +15,12 @@ public class AddressController {
 
   public static Address getAddress(int id) {
 
-    // Check for DB Connection
+    // Tjekker database forbindelsen
     if (dbCon == null) {
       dbCon = new DatabaseController();
     }
 
-    // Our SQL string
+    // Vores SQL string
     String sql = "SELECT * FROM address where id=" + id;
 
     // Do the query and set the initial value to null
@@ -39,7 +39,7 @@ public class AddressController {
                 rs.getString("zipcode")
                 );
 
-        // Return our newly added object
+        // Returnerer vores nytilføjede objekt
         return address;
       } else {
         System.out.println("No address found");
@@ -54,15 +54,15 @@ public class AddressController {
 
   public static Address createAddress(Address address) {
 
-    // Write in log that we've reach this step
+    // Skriver i log, at vi er kommet til dette step
     Log.writeLog(ProductController.class.getName(), address, "Actually creating a line item in DB", 0);
 
-    // Check for DB Connection
+    // Tjekker for database forbindelse
     if (dbCon == null) {
       dbCon = new DatabaseController();
     }
 
-    // Insert the product in the DB
+    // Indsætter produkterne i databasen
     int addressID = dbCon.insert(
         "INSERT INTO address(name, city, zipcode, street_address) VALUES('"
             + address.getName()
@@ -75,14 +75,14 @@ public class AddressController {
             + "')");
 
     if (addressID != 0) {
-      //Update the productid of the product before returning
+      // Opdaterer ID'et før det returneres (produktID)
       address.setId(addressID);
     } else{
-      // Return null if product has not been inserted into database
+      // Returner null hvis produktet ikke er blevet sat ind i databasen
       return null;
     }
 
-    // Return product, will be null at this point
+    // Returner adresser
     return address;
   }
   

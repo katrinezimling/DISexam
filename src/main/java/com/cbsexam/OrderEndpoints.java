@@ -17,6 +17,9 @@ import utils.Log;
 
 @Path("order")
 public class OrderEndpoints {
+  //Opretter objekt af OrderCache, hvilket gør at klassen kan hentes.
+  //Kan hentes i andre klasser, da den ligger udenfor metoden
+  static OrderCache orderCache = new OrderCache();
 
   /**
    * @param idOrder
@@ -26,21 +29,18 @@ public class OrderEndpoints {
   @Path("/{idOrder}")
   public Response getOrder(@PathParam("idOrder") int idOrder) {
 
-    // Call our controller-layer in order to get the order from the DB
+    // Kalder controller-laget for at få ordrer fra databasen
     Order order = OrderController.getOrder(idOrder);
 
     // TODO: Add Encryption to JSON : FIX
-    // We convert the java object to json with GSON library imported in Maven
+    // Vi konverterer java objekt til json ved at bruge json biblioteket, som er importeret i Maven
     String json = new Gson().toJson(order);
-    //Laver kryptering
+    //Implementerer kryptering
     json = Encryption.encryptDecryptXOR(json);
 
-    // Return a response with status 200 and JSON as type
+    // Returnerer et svar med en status 200 og en json som type
     return Response.status(200).type(MediaType.APPLICATION_JSON).entity(json).build();
   }
-  //Opretter objekt af OrderCache, hvilket gør at klassen kan hentes.
-  //Kan hentes i andre klasser, da den ligger udenfor metoden
-  static OrderCache orderCache = new OrderCache();
 
   /** @return Responses */
   @GET
@@ -52,12 +52,12 @@ public class OrderEndpoints {
     ArrayList<Order> orders = orderCache.getOrders(false);
 
     // TODO: Add Encryption to JSON : FIX
-    // We convert the java object to json with GSON library imported in Maven
+    // Vi konverterer java objekt til json ved at bruge json biblioteket, som er importeret i Maven
     String json = new Gson().toJson(orders);
     //Laver kryptering
     json = Encryption.encryptDecryptXOR(json);
 
-    // Return a response with status 200 and JSON as type
+    // Returnerer et svar med en status 200 og en json som type
     return Response.status(200).type(MediaType.TEXT_PLAIN_TYPE).entity(json).build();
   }
 
@@ -66,23 +66,23 @@ public class OrderEndpoints {
   @Consumes(MediaType.APPLICATION_JSON)
   public Response createOrder(String body) {
 
-    // Read the json from body and transfer it to a order class
+    // Læser json fra body og fører det hen til order klassen
     Order newOrder = new Gson().fromJson(body, Order.class);
 
-    // Use the controller to add the user
+    // Brug controlleren til at tilføje en user
     Order createdOrder = OrderController.createOrder(newOrder);
 
-    // Get the user back with the added ID and return it to the user
+    // Få en bruger tilbage med det tilføjede ID og returner det til brugeren
     String json = new Gson().toJson(createdOrder);
 
-    // Return the data to the user
+    // Returner data til brugeren
     if (createdOrder != null) {
-      // Return a response with status 200 and JSON as type
+      // Returnerer et svar med en status 200 og en json som type
       return Response.status(200).type(MediaType.APPLICATION_JSON_TYPE).entity(json).build();
     } else {
 
-      // Return a response with status 400 and a message in text
-      return Response.status(400).entity("Could not create user").build();
+      // Returnerer et svar med status 400 og en besked i tekst
+      return Response.status(400).entity("Kunne ikke oprette ordren").build();
     }
   }
 }
