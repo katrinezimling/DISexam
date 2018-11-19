@@ -148,31 +148,33 @@ public class UserController {
 //Gør at den ved hvor den skal stoppe. Den afgrænser: '.
     String sql = "SELECT * FROM user WHERE email ='" + user.getEmail() + "'AND password='" + user.getPassword() + "'";
 
-    //Denne metode bruges i databasecontrolleren
-    dbCon.loginUser(sql);
-
     //Do the query
     ResultSet resultset = dbCon.query(sql);
 
+    User loginUser = null;
+
+    //Denne metode bruges i databasecontrolleren
+
+  // dbCon.loginUser(sql);
     User userlogin;
     String token = null;
 
 //Når man logger en bruger ind, skal man have alle informationerne med
     try {
       if (resultset.next()) {
-        userlogin =
-                new User(
+
+               loginUser = new User(
                         resultset.getInt("id"),
                         resultset.getString("first_name"),
                         resultset.getString("last_name"),
                         resultset.getString("password"),
                         resultset.getString("email"));
 
-        if (userlogin != null) {
+        if (loginUser != null) {
           try {
             Algorithm algorithm = Algorithm.HMAC256("secret");
             token = JWT.create()
-                    .withClaim("userId", userlogin.getId())
+                    .withClaim("userId", loginUser.getId())
                     .withIssuer("auth0")
                     .sign(algorithm);
             return token;
@@ -218,6 +220,7 @@ public class UserController {
 
   public static boolean updateUser(User user, String token) {
     Hashing hashing = new Hashing();
+
     if (dbCon == null) {
       dbCon = new DatabaseController();
     }
@@ -240,6 +243,7 @@ public class UserController {
                     + "' WHERE id = " + jwt.getClaim("userId").asInt();
 
     // Return user/token
+    //SKriv: return dbon.insert(sql)
     return dbCon.updateUser(sql);
   }
 }
