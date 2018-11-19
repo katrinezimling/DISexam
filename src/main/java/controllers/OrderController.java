@@ -139,14 +139,16 @@ public class OrderController {
         // Save the user to the database and save them back to initial order instance
         order.setCustomer(UserController.createUser(order.getCustomer()));
 
-        //Sætte den til null før man kan sætte til false/true
-        Connection connection = null;
+        //Laver forbindelsen til databasen
+        Connection connection = dbCon.getConnection();
         // TODO: Enable transactions in order for us to not save the order if somethings fails for some of the other inserts.
         try {
+            //Sætter til false, så den ikke bliver ved med at commit
             connection.setAutoCommit(false);
-            // Insert the product in the DB
+            // Indsætter produkterne i databasen
 
             int orderID = dbCon.insert(
+
                     "INSERT INTO orders(user_id, billing_address_id, shipping_address_id, order_total, created_at, updated_at) VALUES("
                             + order.getCustomer().getId()
                             + ", "
@@ -162,13 +164,13 @@ public class OrderController {
                             + ")");
 
             if (orderID != 0) {
-                //Update the productid of the product before returning
+                //Opdaterer produkternes ID før der returneres
                 order.setId(orderID);
             }
-            // Create an empty list in order to go trough items and then save them back with ID
+            // Laver en tom liste i ordre, så man kan gå igennem items og gemme dem tilbage med ID
             ArrayList<LineItem> items = new ArrayList<LineItem>();
 
-            // Save line items to database
+            // Gemmer line items til databasen
             for (LineItem item : order.getLineItems()) {
                 item = LineItemController.createLineItem(item, order.getId());
                 items.add(item);
@@ -192,8 +194,6 @@ public class OrderController {
                 }
             }
         }
-
         return order;
     }
-
 }
