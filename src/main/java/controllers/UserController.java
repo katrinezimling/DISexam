@@ -148,15 +148,12 @@ public class UserController {
 //Gør at den ved hvor den skal stoppe. Den afgrænser: '.
     String sql = "SELECT * FROM user WHERE email ='" + user.getEmail() + "'AND password='" + user.getPassword() + "'";
 
+    dbCon.insert(sql);
+
     //Lav query
     ResultSet resultset = dbCon.query(sql);
 
     User loginUser = null;
-
-    //Denne metode bruges i databasecontrolleren
-
-  // dbCon.loginUser(sql);
-    User userlogin;
     String token = null;
 
 //Når man logger en bruger ind, skal man have alle informationerne med
@@ -214,7 +211,7 @@ public class UserController {
 
     String sql = "DELETE FROM user WHERE id = " + jwt.getClaim("userId").asInt();
 
-    return dbCon.deleteUser(sql);
+    return dbCon.insert(sql) == 1;
 
   }
 
@@ -243,8 +240,8 @@ public class UserController {
                     + "' WHERE id = " + jwt.getClaim("userId").asInt();
 
     // Return user/token
-    //SKriv: return dbon.insert(sql) med ændring i databasecontroller
-    return dbCon.updateUser(sql);
+    //Lig med 1 fordi det er en boolean.
+    return dbCon.insert(sql) == 1;
   }
 }
 
