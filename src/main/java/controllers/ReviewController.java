@@ -9,10 +9,10 @@ public class ReviewController {
 
   public static ArrayList<Review> searchByTitle(String title) {
 
-    // We wish to have an empty list for the results
+    // Vi vil gerne have en tom liste til resultaterne
     ArrayList<Review> reviews = new ArrayList<Review>();
 
-    // Do the search in the controller
+    // Laver søgningen i controlleren
     SolrDocumentList documents = SolrController.search("title", title);
 
     for (SolrDocument doc : documents) {
@@ -25,26 +25,26 @@ public class ReviewController {
               (String) doc.getFirstValue("description"),
               (String) doc.getFirstValue("author"));
 
-      // Add the review to the list
+      // Tilføjer review til listen
       reviews.add(r);
     }
 
-    // Return the list
+    // Returner listen
     return reviews;
   }
 
 
   public static ArrayList<Review> searchByID(int id) {
 
-    // We wish to have an empty list for the results
+    // Vi vil gerne have en tom liste til resultaterne
     ArrayList<Review> reviews = new ArrayList<Review>();
 
-    // Do the search in the controller
+    // Laver søgningen i controlleren
     SolrDocumentList documents = SolrController.search("title", Integer.toString(id));
 
     // Loop through the results, which are documents from SolR
     for (SolrDocument doc : documents) {
-      // Create a new review based on the SolR document
+      // Laver et nyt review baseret på SolR dokumentet
       Review r =
           new Review(
               (int) doc.get("id"),
@@ -52,11 +52,11 @@ public class ReviewController {
               (String) doc.get("description"),
               (String) doc.get("author"));
 
-      // Add the review to the list
+      // Tilføjer review til listen
       reviews.add(r);
     }
 
-    // Return the results
+    // Returner resultaterne
     return reviews;
   }
 }

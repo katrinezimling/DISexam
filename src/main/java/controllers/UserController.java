@@ -23,15 +23,15 @@ public class UserController {
 
   public static User getUser(int id) {
 
-    // Check for connection
+    // Tjekker for database forbindelse
     if (dbCon == null) {
       dbCon = new DatabaseController();
     }
 
-    // Build the query for DB
+    // Laver query for databasen
     String sql = "SELECT * FROM user where id=" + id;
 
-    // Actually do the query
+    // Laver query
     ResultSet rs = dbCon.query(sql);
     User user = null;
 
@@ -46,7 +46,7 @@ public class UserController {
                         rs.getString("password"),
                         rs.getString("email"));
 
-        // return the create object
+        // returner det oprettede objekt
         return user;
       } else {
         System.out.println("No user found");
@@ -60,18 +60,18 @@ public class UserController {
   }
 
   /**
-   * Get all users in database
+   * Henter alle brugerer i databasen
    *
    * @return
    */
   public static ArrayList<User> getUsers() {
 
-    // Check for DB connection
+    // Tjekker for database forbindelse
     if (dbCon == null) {
       dbCon = new DatabaseController();
     }
 
-    // Build SQL
+    // SQL statement
     String sql = "SELECT * FROM user";
 
     // Do the query and initialyze an empty list for use if we don't get results
@@ -89,32 +89,32 @@ public class UserController {
                         rs.getString("password"),
                         rs.getString("email"));
 
-        // Add element to list
+        // Tilføjer et element til listen
         users.add(user);
       }
     } catch (SQLException ex) {
       System.out.println(ex.getMessage());
     }
 
-    // Return the list of users
+    // Returner listen med brugere
     return users;
   }
 
 
   public static User createUser(User user) {
 
-    // Write in log that we've reach this step
+    // Skriver i log at vi er nået til dette step
     Log.writeLog(UserController.class.getName(), user, "Actually creating a user in DB", 0);
 
     // Set creation time for user.
     user.setCreatedTime(System.currentTimeMillis() / 1000L);
 
-    // Check for DB Connection
+    // Tjekker database forbindelsen
     if (dbCon == null) {
       dbCon = new DatabaseController();
     }
 
-    // Insert the user in the DB
+    // Indsætter bruger i databasen
     // TODO: Hash the user password before saving it. : FIX
     int userID = dbCon.insert(
             "INSERT INTO user(first_name, last_name, password, email, created_at) VALUES('"
@@ -130,14 +130,14 @@ public class UserController {
                     + ")");
 
     if (userID != 0) {
-      //Update the userid of the user before returning
+      //Opdaterer userID før det returneres
       user.setId(userID);
     } else {
-      // Return null if user has not been inserted into database
+      // Returner null hvis brugeren ikke er blevet sat ind i databasen
       return null;
     }
 
-    // Return user
+    // Returner bruger
     return user;
   }
 
@@ -148,7 +148,7 @@ public class UserController {
 //Gør at den ved hvor den skal stoppe. Den afgrænser: '.
     String sql = "SELECT * FROM user WHERE email ='" + user.getEmail() + "'AND password='" + user.getPassword() + "'";
 
-    //Do the query
+    //Lav query
     ResultSet resultset = dbCon.query(sql);
 
     User loginUser = null;
@@ -243,7 +243,7 @@ public class UserController {
                     + "' WHERE id = " + jwt.getClaim("userId").asInt();
 
     // Return user/token
-    //SKriv: return dbon.insert(sql)
+    //SKriv: return dbon.insert(sql) med ændring i databasecontroller
     return dbCon.updateUser(sql);
   }
 }

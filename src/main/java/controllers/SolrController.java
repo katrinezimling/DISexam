@@ -18,7 +18,7 @@ public final class SolrController {
   }
 
   /**
-   * Get database connection
+   *
    *
    * @return a Connection object
    */
@@ -35,7 +35,7 @@ public final class SolrController {
             + "/"
             + Config.getSolrCore();
 
-    // Connect to SolR
+    // Forbindelse til SolR
     HttpSolrClient solr = new HttpSolrClient.Builder(urlString).build();
     solr.setParser(new XMLResponseParser());
 
@@ -61,10 +61,10 @@ public final class SolrController {
     SolrDocumentList docList = new SolrDocumentList();
 
     try {
-      // Search in Solr
+      // Søger i Solr
       QueryResponse response = connection.query(query);
 
-      // Get the results
+      // Får resultaterne
       docList = response.getResults();
 
     } catch (SolrServerException e) {
