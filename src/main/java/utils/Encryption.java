@@ -8,7 +8,7 @@ public final class Encryption {
     //Selvom vi har implementeret kryptering, kan vi hurtigt slå det fra igen
     if (Config.getEncryption()) {
 
-      // Nøgten er predefined og gemt i koden
+      // Nøglen er predefined og gemt i koden
       // TODO: Create a more complex code and store it somewhere better: FIX
       char[] key = Config.getEncryptionkey();
 

@@ -153,8 +153,9 @@ public class UserController {
     //Lav query
     ResultSet resultset = dbCon.query(sql);
 
-    User loginUser = null;
-    String token = null;
+    //Deklarerer uden værdi ligesom med null
+    User loginUser;
+    String token;
 
 //Når man logger en bruger ind, skal man have alle informationerne med
     try {

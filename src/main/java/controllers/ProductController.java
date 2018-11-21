@@ -67,20 +67,9 @@ public class ProductController {
     Product product = null;
 
     try {
-      if (rs.next()) {
-        product =
-            new Product(
-                rs.getInt("id"),
-                rs.getString("product_name"),
-                rs.getString("sku"),
-                rs.getFloat("price"),
-                rs.getString("description"),
-                rs.getInt("stock"));
 
-        return product;
-      } else {
-        System.out.println("No user found");
-      }
+      demoMethod(rs);
+
     } catch (SQLException ex) {
       System.out.println(ex.getMessage());
     }
@@ -165,5 +154,25 @@ public class ProductController {
 
     // Return product
     return product;
+  }
+
+  public static Product demoMethod(ResultSet rs) throws SQLException {
+    Product product;
+    if (rs.next()) {
+      product =
+              new Product(
+                      rs.getInt("id"),
+                      rs.getString("product_name"),
+                      rs.getString("sku"),
+                      rs.getFloat("price"),
+                      rs.getString("description"),
+                      rs.getInt("stock"));
+
+      // Return the product
+      return product;
+    } else {
+      System.out.println("No user found");
+      return null;
+    }
   }
 }
