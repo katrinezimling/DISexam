@@ -171,7 +171,7 @@ public class ProductController {
       // Return the product
       return product;
     } else {
-      System.out.println("No user found");
+      System.out.println("Der blev ikke fundet nogen bruger");
       return null;
     }
   }

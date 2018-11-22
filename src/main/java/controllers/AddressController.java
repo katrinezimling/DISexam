@@ -42,7 +42,7 @@ public class AddressController {
         // Returnerer vores nytilføjede objekt
         return address;
       } else {
-        System.out.println("No address found");
+        System.out.println("Der blev ikke fundet nogen adresse");
       }
     } catch (SQLException ex) {
       System.out.println(ex.getMessage());

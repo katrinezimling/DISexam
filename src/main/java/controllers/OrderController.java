@@ -58,7 +58,7 @@ public class OrderController {
                 // Returns the build order
                 return order;
             } else {
-                System.out.println("No order found");
+                System.out.println("Der blev ikke fundet nogle ordrer");
             }
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -88,6 +88,7 @@ public class OrderController {
             while (rs.next()) {
 
                 // Perhaps we could optimize things a bit here and get rid of nested queries.
+
                 User user = UserController.getUser(rs.getInt("user_id"));
                 ArrayList<LineItem> lineItems = LineItemController.getLineItemsForOrder(rs.getInt("id"));
                 Address billingAddress = AddressController.getAddress(rs.getInt("billing_address_id"));
