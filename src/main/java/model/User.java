@@ -25,7 +25,6 @@ public class User {
   public String getToken() {
     return token;
   }
-
   public void setId(int id) {
     this.id = id;
   }

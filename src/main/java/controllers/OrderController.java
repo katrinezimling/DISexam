@@ -135,7 +135,7 @@ public class OrderController {
 
         //Laver forbindelsen til databasen
         Connection connection = dbCon.getConnection();
-        // TODO: Enable transactions in order for us to not save the order if somethings fails for some of the other inserts.
+        // TODO: Enable transactions in order for us to not save the order if somethings fails for some of the other inserts. FIX
         try {
             // Save addresses to database and save them back to initial order instance
             //Skal stå her, da det ellers ikke vil blive tjekket for fejl

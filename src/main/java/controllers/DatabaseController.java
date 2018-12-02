@@ -113,65 +113,6 @@ public class DatabaseController {
         return result;
     }
 
-    public boolean deleteUser(String sql) {
-        if (connection == null) {
-            connection = getConnection();
-        }
-        try {
-            PreparedStatement deleteUser = connection.prepareStatement(sql);
-            deleteUser.executeUpdate();
-            //hvis der ikke står true, vil den altid udskrive, at brugeren ikke er slettet, selvom den er
-            return true;
 
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return false;
-    }
-
-    //Slet
-    public void loginUser(String sql) {
-        if (connection == null) {
-            connection = getConnection();
-        }
-        try {
-            //PreparedStatement executes the SQL query
-            //Skal sætte nogle variable, så bruges PreparedStatement
-            PreparedStatement statement = connection.prepareStatement(sql);
-            //Udfører noget i databasen
-            statement.executeUpdate();
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public boolean updateUser(String sql) {
-        if (connection == null) {
-            connection = getConnection();
-        }
-        try {
-            PreparedStatement updateUser = connection.prepareStatement(sql);
-            updateUser.executeUpdate();
-            return true;
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return false;
-    }
-
-    public boolean createOrder(String sql) {
-        if (connection == null) {
-            connection = getConnection();
-        }
-
-        try {
-            PreparedStatement statement = connection.prepareStatement(sql);
-            statement.executeUpdate();
-
-        } catch (SQLException e) {
-            System.out.println(e.getMessage());
-        }
-        return false;
-    }
 }
 

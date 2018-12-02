@@ -3,8 +3,6 @@ package controllers;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
-
-import cache.ProductCache;
 import model.Product;
 import utils.Log;
 
@@ -157,6 +155,7 @@ public class ProductController {
   }
 
   public static Product demoMethod(ResultSet rs) throws SQLException {
+    //Laver et objekt af product
     Product product;
     if (rs.next()) {
       product =

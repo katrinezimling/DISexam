@@ -3,13 +3,12 @@ package cache;
 import controllers.OrderController;
 import model.Order;
 import utils.Config;
-
 import java.util.ArrayList;
 
 //TODO: Build this cache and use it. : FIX
 public class OrderCache {
 
-    // Liste med ordre
+    // En liste med alle ordrer
     private ArrayList<Order> orders;
 
     // Den tid cache skal leve i
@@ -18,6 +17,7 @@ public class OrderCache {
     // Indstiller, når cachen er oprettet
     private long created;
 
+    //
     public OrderCache() {
         this.ttl = Config.getOrderTtl();
     }
@@ -27,9 +27,10 @@ public class OrderCache {
 
         // If we whis to clear cache, we can set force update.
         // Otherwise we look at the age of the cache and figure out if we should update.
-        // If the list is empty we also check for new products
+        // If the list is empty we also check for new orders.
         if (forceUpdate
-                //Created time skal være mindre end TimeMillis. TJEK OP
+                //Created time skal være mindre end TimeMillis, før der opdateres
+                //Når den er blevet cachet, skal den ikke opdatere. Venstre side er større end højre.
                 || ((this.created + this.ttl) <= (System.currentTimeMillis() / 1000L))
                 || this.orders.isEmpty()) {
 
@@ -41,10 +42,10 @@ public class OrderCache {
             this.created = System.currentTimeMillis() / 1000L;
             //Tester om cache bliver brugt
             //Denne skal ikke udskrives flere gange
-            System.out.println("Cache bliver ikke brugt");
+            //System.out.println("Cache bliver ikke brugt");
         }
 
-        // Returnerer dokumenterne
+        // Returnerer arraylisten med ordrer
         return this.orders;
     }
 }

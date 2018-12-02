@@ -2,10 +2,7 @@ package com.cbsexam;
 //importerer en masse klasser
 import cache.UserCache;
 import com.google.gson.Gson;
-import com.sun.org.apache.regexp.internal.RE;
 import controllers.UserController;
-
-import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
@@ -13,9 +10,15 @@ import javax.ws.rs.core.Response;
 import model.User;
 import utils.Encryption;
 import utils.Log;
+
 //De end-points, der ligger i denne klasse, hører til Path "user"
 @Path("user")
 public class UserEndpoints {
+  //Opretter objekt af UserCache, hvilket gør at klassen kan hentes.
+  //Kan hentes i andre klasser, da den ligger udenfor metoden
+  //static, da den skal hentes én gang og knyttes til en bestemt klasse
+  //static giver adgang til klassens metode, uden at der er oprettet en instans af klassen
+  static UserCache userCache = new UserCache();
 
   /**
    * @param idUser
@@ -37,10 +40,9 @@ public class UserEndpoints {
     //Bruger google bibliotek Gson, der spytter json string ud, og returnerer tilbage til brugeren igen
     String json = new Gson().toJson(user);
 
-    //Laver kryptering:
+    //Laver kryptering med XOR
     json = Encryption.encryptDecryptXOR(json);
 
-    // Return the user with the status code 200
     // TODO: What should happen if something breaks down? FIX
 
     try {
@@ -54,11 +56,7 @@ public class UserEndpoints {
       return Response.status(500).entity("Der gik noget galt").build();
     }
   }
-  //Opretter objekt af UserCache, hvilket gør at klassen kan hentes.
-  //Kan hentes i andre klasser, da den ligger udenfor metoden
-  //static, da den skal hentes en gang og knyttes til en bestemt klasse
-  //static giver adgang til klassens metode, uden at der er oprettet en instans af klassen
-  static UserCache userCache = new UserCache();
+
   /** @return Responses */
   @GET
   @Path("/")
@@ -142,7 +140,6 @@ public class UserEndpoints {
     } else {
       return Response.status(400).entity("Brugeren kan ikke findes i systemet").build();
     }
-
   }
 
   // TODO: Make the system able to update users: FIX

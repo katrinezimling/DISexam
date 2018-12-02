@@ -4,7 +4,6 @@ import cache.ProductCache;
 import com.google.gson.Gson;
 import controllers.DatabaseController;
 import controllers.ProductController;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 import javax.ws.rs.Consumes;
@@ -16,7 +15,6 @@ import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import model.Product;
 import utils.Encryption;
-import utils.Log;
 
 @Path("product")
 public class ProductEndpoints {

@@ -41,6 +41,7 @@ public class ProductCache {
       //Tester om cache bliver brugt
       //Denne skal ikke udskrives flere gange
       System.out.println("Cache bliver ikke brugt");
+
     }
 
     // Returner the dokumenterne
