@@ -102,7 +102,7 @@ public class UserEndpoints {
       // Returnerer et svar med en status 200 og en json som type
       return Response.status(200).type(MediaType.APPLICATION_JSON_TYPE).entity(json).build();
     } else {
-      return Response.status(400).entity("Could not create user").build();
+      return Response.status(400).entity("Kunne ikke oprette bruger").build();
     }
   }
 

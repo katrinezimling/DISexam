@@ -10,6 +10,7 @@ import com.auth0.jwt.exceptions.JWTCreationException;
 import com.auth0.jwt.exceptions.JWTVerificationException;
 import com.auth0.jwt.interfaces.DecodedJWT;
 import model.User;
+import utils.Config;
 import utils.Hashing;
 import utils.Log;
 
@@ -170,10 +171,10 @@ public class UserController {
 
         if (loginUser != null) {
           try {
-            Algorithm algorithm = Algorithm.HMAC256("secret");
+            Algorithm algorithm = Algorithm.HMAC256(Config.getSecretKey());
             token = JWT.create()
                     .withClaim("userId", loginUser.getId())
-                    .withIssuer("auth0")
+                    .withIssuer("cbsexam")
                     .sign(algorithm);
             return token;
           } catch (JWTCreationException exception) {

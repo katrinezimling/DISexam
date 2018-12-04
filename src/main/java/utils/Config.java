@@ -25,7 +25,9 @@ public final class Config {
   private static long USER_TTL;
   private static String ENCRYPTION_KEY;
   private static String SALT_KEY;
+  private static String SECRET_KEY;
 
+  public static String getSecretKey(){return SECRET_KEY;}
   public static long getProductTtl() {
     return PRODUCT_TTL;
   }
