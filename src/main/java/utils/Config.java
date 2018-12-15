@@ -119,5 +119,6 @@ public final class Config {
     USER_TTL = json.get("USER_TTL").getAsLong();
     ENCRYPTION_KEY = json.get ("ENCRYPTION_KEY").getAsString();
     SALT_KEY = json.get("SALT_KEY").getAsString();
+    SECRET_KEY = json.get("SECRET_KEY").getAsString();
   }
 }

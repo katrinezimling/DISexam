@@ -50,7 +50,7 @@ public class UserController {
         // returner det oprettede objekt
         return user;
       } else {
-        System.out.println("No user found");
+        System.out.println("Brugeren blev ikke fundet");
       }
     } catch (SQLException ex) {
       System.out.println(ex.getMessage());
@@ -105,7 +105,7 @@ public class UserController {
   public static User createUser(User user) {
 
     // Skriver i log at vi er nået til dette step
-    Log.writeLog(UserController.class.getName(), user, "Actually creating a user in DB", 0);
+    Log.writeLog(UserController.class.getName(), user, "Opretter en bruger i databasen", 0);
 
     // Set creation time for user.
     user.setCreatedTime(System.currentTimeMillis() / 1000L);
@@ -183,7 +183,7 @@ public class UserController {
           }
         }
       } else {
-        System.out.println("No user found");
+        System.out.println("Brugeren kunne ikke findes");
       }
     } catch (SQLException e) {
       System.out.println(e.getMessage());
@@ -200,15 +200,14 @@ public class UserController {
     //Decode - laver det om til noget man forstår
     DecodedJWT jwt = null;
     try {
-      Algorithm algorithm = Algorithm.HMAC256("secret");
+      Algorithm algorithm = Algorithm.HMAC256(Config.getSecretKey());
       JWTVerifier verifier = JWT.require(algorithm)
-              .withIssuer("auth0")
-              .build(); //Reusable verifier instance
+              .withIssuer("cbsexam")
+              .build();
       jwt = verifier.verify(token);
 
     } catch (JWTVerificationException exception) {
       System.out.println(exception.getMessage());
-      //Invalid signature/claims
     }
 
     String sql = "DELETE FROM user WHERE id = " + jwt.getClaim("userId").asInt();
@@ -227,10 +226,10 @@ public class UserController {
     DecodedJWT jwt = null;
 
     try {
-      Algorithm algorithm = Algorithm.HMAC256("secret");
+      Algorithm algorithm = Algorithm.HMAC256(Config.getSecretKey());
       JWTVerifier verifier = JWT.require(algorithm)
-              .withIssuer("auth0")
-              .build(); //Reusable verifier instance
+              .withIssuer("cbsexam")
+              .build();
       jwt = verifier.verify(token);
 
     } catch (JWTVerificationException exception) {
@@ -246,5 +245,3 @@ public class UserController {
     return dbCon.insert(sql) == 1;
   }
 }
-
-

@@ -43,7 +43,7 @@ public class ProductController {
         // Return the product
         return product;
       } else {
-        System.out.println("No user found");
+        System.out.println("Der blev ikke fundet nogle produkter");
       }
     } catch (SQLException ex) {
       System.out.println(ex.getMessage());
@@ -143,10 +143,10 @@ public class ProductController {
             + ")");
 
     if (productID != 0) {
-      //Update the productid of the product before returning
+      //Opdaterer produkt id'et før det returneres
       product.setId(productID);
     } else{
-      // Return null if product has not been inserted into database
+      // Returnerer null hvis produktet ikke er blevet indsat i databasen
       return null;
     }
 

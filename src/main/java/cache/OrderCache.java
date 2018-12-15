@@ -40,9 +40,7 @@ public class OrderCache {
             // Set orders for the instance and set created timestamp
             this.orders = orders;
             this.created = System.currentTimeMillis() / 1000L;
-            //Tester om cache bliver brugt
-            //Denne skal ikke udskrives flere gange
-            //System.out.println("Cache bliver ikke brugt");
+
         }
 
         // Returnerer arraylisten med ordrer
