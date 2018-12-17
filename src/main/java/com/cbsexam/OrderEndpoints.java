@@ -50,7 +50,7 @@ public class OrderEndpoints {
   @Path("/")
   public Response getOrders() {
 
-    // Call our controller-layer in order to get the order from the DB
+    // Kalder vores controller-lag, da vi vil hente ordrer fra databasen
     //Henter metoden getOrders fra orderCache, så metoden bliver brugt
     ArrayList<Order> orders = orderCache.getOrders(false);
 

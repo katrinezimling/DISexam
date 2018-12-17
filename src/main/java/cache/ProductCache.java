@@ -13,7 +13,7 @@ public class ProductCache {
   // Den tid cache skal leve
   private long ttl;
 
-  // Sets when the cache has been created
+  // Sets når cache er oprettet
   private long created;
 
   public ProductCache() {
@@ -42,7 +42,7 @@ public class ProductCache {
 
     }
 
-    // Returner the dokumenterne
+    // Returner produkterne
     return this.products;
   }
 }

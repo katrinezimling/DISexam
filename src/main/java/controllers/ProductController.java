@@ -16,12 +16,12 @@ public class ProductController {
 
   public static Product getProduct(int id) {
 
-    // check for connection
+    // Tjekker om der er forbindelse til databasen
     if (dbCon == null) {
       dbCon = new DatabaseController();
     }
 
-    // Build the SQL query for the DB
+    // SQL query til databasen
     String sql = "SELECT * FROM product where id=" + id;
 
     // Run the query in the DB and make an empty object to return
@@ -40,7 +40,7 @@ public class ProductController {
                 rs.getString("description"),
                 rs.getInt("stock"));
 
-        // Return the product
+        // Returnerer produkterne
         return product;
       } else {
         System.out.println("Der blev ikke fundet nogle produkter");
@@ -49,7 +49,7 @@ public class ProductController {
       System.out.println(ex.getMessage());
     }
 
-    // Return empty object
+    // Returner tomt objekt
     return product;
   }
 
@@ -66,17 +66,29 @@ public class ProductController {
 
     try {
 
-      demoMethod(rs);
+      if (rs.next()) {
+        product =
+                new Product(
+                        rs.getInt("id"),
+                        rs.getString("product_name"),
+                        rs.getString("sku"),
+                        rs.getFloat("price"),
+                        rs.getString("description"),
+                        rs.getInt("stock"));
+        return product;
+
+      }else {
+        System.out.println("Produktet blev ikke fundet");
+      }
 
     } catch (SQLException ex) {
       System.out.println(ex.getMessage());
     }
-
     return product;
   }
 
   /**
-   * Get all products in database
+   * Henter alle produkter i databasen
    *
    * @return
    */
@@ -88,7 +100,7 @@ public class ProductController {
 
     // TODO: Use caching layer. FIX
     //Har ændret det i Endpoint, derfor er det ikke nødvendigt her
-    //Smartere at lave det i Endpoints fremfor Controller. Uddyb
+    //Smartere at lave det i Endpoints fremfor Controller.
     String sql = "SELECT * FROM product";
 
     ResultSet rs = dbCon.query(sql);
@@ -115,18 +127,18 @@ public class ProductController {
 
   public static Product createProduct(Product product) {
 
-    // Write in log that we've reach this step
+    // Skriver til log at vi er kommet til dette step
     Log.writeLog(ProductController.class.getName(), product, "Actually creating a product in DB", 0);
 
-    // Set creation time for product.
+    // Set creation time for produktet.
     product.setCreatedTime(System.currentTimeMillis() / 1000L);
 
-    // Check for DB Connection
+    // Tjekker om der er forbindelse til databasen
     if (dbCon == null) {
       dbCon = new DatabaseController();
     }
 
-    // Insert the product in the DB
+    // Indsætter produkterne i databasen
     int productID = dbCon.insert(
         "INSERT INTO product(product_name, sku, price, description, stock, created_at) VALUES('"
             + product.getName()
@@ -136,9 +148,9 @@ public class ProductController {
             + product.getPrice()
             + "', '"
             + product.getDescription()
-            + "', "
+            + "', '"
             + product.getStock()
-            + "', "
+            + "', '"
             + product.getCreatedTime()
             + ")");
 
@@ -150,28 +162,8 @@ public class ProductController {
       return null;
     }
 
-    // Return product
+    // Returner produkt
     return product;
-  }
 
-  public static Product demoMethod(ResultSet rs) throws SQLException {
-    //Laver et objekt af product
-    Product product;
-    if (rs.next()) {
-      product =
-              new Product(
-                      rs.getInt("id"),
-                      rs.getString("product_name"),
-                      rs.getString("sku"),
-                      rs.getFloat("price"),
-                      rs.getString("description"),
-                      rs.getInt("stock"));
-
-      // Return the product
-      return product;
-    } else {
-      System.out.println("Der blev ikke fundet nogen bruger");
-      return null;
-    }
   }
 }

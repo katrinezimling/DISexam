@@ -45,14 +45,14 @@ public class LineItemController {
                 rs.getInt("quantity"),
                 rs.getFloat("price"));
 
-        // Add it to our list of items and return it
+        // Tilføjer til listen og items og returnerer det 
         items.add(lineItem);
       }
     } catch (SQLException ex) {
       System.out.println(ex.getMessage());
     }
 
-    // Returner listen, which might be empty !! TJEK
+    // Returner listen, which might be empty
     return items;
   }
 

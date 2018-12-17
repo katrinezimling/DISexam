@@ -22,7 +22,7 @@ public class OrderController {
 
     public static Order getOrder(int id) {
 
-        // check for connection
+        // Tjekker om der er forbindelse til databasen
         if (dbCon == null) {
             dbCon = new DatabaseController();
         }
@@ -30,7 +30,7 @@ public class OrderController {
         // Build SQL string to query
         String sql = "SELECT * FROM orders where id=" + id;
 
-        // Do the query in the database and create an empty object for the results
+        // Laver query i databasen og opretter et tomt objekt til resultaterne
         ResultSet rs = dbCon.query(sql);
         Order order = null;
 
@@ -43,7 +43,7 @@ public class OrderController {
                 Address billingAddress = AddressController.getAddress(rs.getInt("billing_address_id"));
                 Address shippingAddress = AddressController.getAddress(rs.getInt("shipping_address_id"));
 
-                // Create an object instance of order from the database dataa
+                // Opretter et objekt instans af ordrer fra databasen
                 order =
                         new Order(
                                 rs.getInt("id"),
@@ -55,7 +55,7 @@ public class OrderController {
                                 rs.getLong("created_at"),
                                 rs.getLong("updated_at"));
 
-                // Returns the build order
+                // Returnerer build order
                 return order;
             } else {
                 System.out.println("Der blev ikke fundet nogle ordrer");
@@ -64,12 +64,12 @@ public class OrderController {
             System.out.println(ex.getMessage());
         }
 
-        // Returns null
+        // Returnerer null
         return order;
     }
 
     /**
-     * Get all orders in database
+     * Henter alle ordrer i databasen
      *
      * @return
      */
@@ -94,7 +94,7 @@ public class OrderController {
                 Address billingAddress = AddressController.getAddress(rs.getInt("billing_address_id"));
                 Address shippingAddress = AddressController.getAddress(rs.getInt("shipping_address_id"));
 
-                // Create an order from the database data
+                // Laver en ordrer ud fra dataen i database
                 Order order =
                         new Order(
                                 rs.getInt("id"),
@@ -106,7 +106,7 @@ public class OrderController {
                                 rs.getLong("created_at"),
                                 rs.getLong("updated_at"));
 
-                // Add order to our list
+                // Tilføjer ordren til listen
                 orders.add(order);
 
             }
@@ -114,21 +114,21 @@ public class OrderController {
             System.out.println(ex.getMessage());
         }
 
-        // return the orders
+        // Returnerer ordrerne
         return orders;
     }
 
-    //Måske throws SQLException skal skrives - Tjek op
+
     public static Order createOrder (Order order) {
 
-        // Write in log that we've reach this step
+        // Skriver i log, at vi er kommet til dette step
         Log.writeLog(OrderController.class.getName(), order, "Actually creating a order in DB", 0);
 
-        // Set creation and updated time for order.
+        // Sætter oprettelse og opdaterede tid for ordren
         order.setCreatedAt(System.currentTimeMillis() / 1000L);
         order.setUpdatedAt(System.currentTimeMillis() / 1000L);
 
-        // Check for DB Connection
+        // Tjekker om der er forbindelse til databasen
         if (dbCon == null) {
             dbCon = new DatabaseController();
         }
@@ -152,7 +152,7 @@ public class OrderController {
             int orderID = dbCon.insert(
 
                     "INSERT INTO orders(user_id, billing_address_id, shipping_address_id, order_total, created_at, updated_at) VALUES("
-                            + order.getCustomer().getId()
+                                + order.getCustomer().getId()
                             + ", "
                             + order.getBillingAddress().getId()
                             + ", "

@@ -48,7 +48,7 @@ public class AddressController {
       System.out.println(ex.getMessage());
     }
 
-    // Returns null if we can't find anything.
+    // Returner null hvis vi ikke kan finde noget
     return address;
   }
 

@@ -8,10 +8,10 @@ import java.util.ArrayList;
 //TODO: Build this cache and use it. : FIX
 public class UserCache {
 
-    // List of users
+    // Liste med brugere
     private ArrayList<User> users;
 
-    // Time cache should live
+    // Time cache skal leve
     private long ttl;
 
     // Sets when the cache has been created
@@ -32,7 +32,7 @@ public class UserCache {
                 || ((this.created + this.ttl) <= (System.currentTimeMillis() / 1000L))
                 || this.users.isEmpty()) {
 
-            // Get users from controller, since we wish to update.
+            // Henter brugere fra controller, da vi vil opdatere
             ArrayList<User> users = UserController.getUsers();
 
             // Set products for the instance and set created timestamp
@@ -41,7 +41,7 @@ public class UserCache {
 
         }
 
-        // Return the documents
+        // Returner brugerne
         return this.users;
     }
 

@@ -47,7 +47,7 @@ public class UserController {
                         rs.getString("password"),
                         rs.getString("email"));
 
-        // returner det oprettede objekt
+        // Returner det oprettede objekt
         return user;
       } else {
         System.out.println("Brugeren blev ikke fundet");

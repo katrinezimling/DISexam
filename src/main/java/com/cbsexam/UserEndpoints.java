@@ -94,10 +94,10 @@ public class UserEndpoints {
     // Use the controller to add the user
     User createUser = UserController.createUser(newUser);
 
-    // Get the user back with the added ID and return it to the user
+    // Henter brugeren med det tilføjede ID og returnerer det
     String json = new Gson().toJson(createUser);
 
-    // Return the data to the user
+    // Returnerer data til brugeren
     if (createUser != null) {
       // Returnerer et svar med en status 200 og en json som type
       return Response.status(200).type(MediaType.APPLICATION_JSON_TYPE).entity(json).build();
@@ -127,7 +127,7 @@ public class UserEndpoints {
   }
 
   // TODO: Make the system able to delete users : FIX
-  @DELETE
+  @POST
   @Path("/delete")
   //body er inde i User
   public Response deleteUser(String body) {
