@@ -28,7 +28,7 @@ public class AddressController {
     Address address = null;
 
     try {
-      // Get the first row and build an address object
+      // Henter første række og bygger et adresse objekt
       if (rs.next()) {
         address =
             new Address(

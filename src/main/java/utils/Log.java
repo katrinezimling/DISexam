@@ -6,7 +6,7 @@ import org.slf4j.LoggerFactory;
 public final class Log {
 
   /**
-   * Method responsible for writing the actual log with a switch for different events
+   * Metode der er ansvarlig for at skrive den faktiske log med en switch til forskellige arrangementer
    *
    * @param className name of Class to be logged in
    * @param eventObject the object which the event occurs "in"
@@ -18,10 +18,10 @@ public final class Log {
   public static void writeLog(
       String className, Object eventObject, String eventDescription, Integer logLevel) {
 
-    // Initializes the log variable with the class in question
+    // Initialisere log variablerne i klassen
     Logger log = LoggerFactory.getLogger(className);
 
-    // Switch responsible for choosing the correct logging according to severity
+    // Skifter ansvarlig for at vælge den rigtige log efter sværhedsgrad
     switch (logLevel) {
       case 2:
         log.debug(eventDescription, eventObject);

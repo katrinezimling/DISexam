@@ -16,24 +16,24 @@ public final class Hashing {
       MessageDigest md = MessageDigest.getInstance("MD5");
     //  rawString = rawString + "jfd";
 
-      // We convert to byte array
+      // Konverterer til en byte array
       byte[] byteArray = md.digest(rawString.getBytes());
 
-      // Initialize a string buffer
+      // Initialiserer en string buffer
       StringBuffer sb = new StringBuffer();
 
-      // Run through byteArray one element at a time and append the value to our stringBuffer
+      // Løber igennem byteArray, et element af gangen og tilføjer værdien til vores Strengbuffer
       for (int i = 0; i < byteArray.length; ++i) {
         sb.append(Integer.toHexString((byteArray[i] & 0xFF) | 0x100).substring(1, 3));
       }
 
-      //Convert back to a single string and return
+      //Konverterer tilbage til en single string og returnerer
       return sb.toString();
 
     } catch (java.security.NoSuchAlgorithmException e) {
 
-      //If somethings breaks
-      System.out.println("Could not hash string");
+      //Hvis noget går galt, udskrives denne besked
+      System.out.println("Kunne ikke hashe string");
     }
 
     return null;
@@ -42,17 +42,17 @@ public final class Hashing {
   // TODO: You should add a salt and make this secure : FIX
   public static String sha(String rawString) {
     try {
-      // We load the hashing algoritm we wish to use.
+      // Vi loader den hashede algoritme, som vi vil bruge
       MessageDigest digest = MessageDigest.getInstance("SHA-256");
       rawString = rawString + Config.getSaltKey();
 
-      // We convert to byte array
+      // Vi konverterer til byte array
       byte[] hash = digest.digest(rawString.getBytes(StandardCharsets.UTF_8));
 
-      // We create the hashed string
+      //Vi opretter den hashede string
       String sha256hex = new String(Hex.encode(hash));
 
-      // And return the string
+      // Og returnerer den
       return sha256hex;
 
     } catch (NoSuchAlgorithmException e) {

@@ -23,12 +23,11 @@ public class UserCache {
 
     public ArrayList<User> getUsers(Boolean forceUpdate) {
 
-
-        // If we whis to clear cache, we can set force update.
-        // Otherwise we look at the age of the cache and figure out if we should update.
-        // If the list is empty we also check for new users
+        // Hvis vi vil cleare cachen, kan vi sætte force update.
+        // Vi kigger på cachen alder/levetid for at finde ud af om vi skal opdatere.
+        // Hvis listen er tom, så tjekker vi for nye ordrer.
         if (forceUpdate
-                //Created time skal være mindre end TimeMillis. TJEK OP
+                //Created time skal være mindre end TimeMillis
                 || ((this.created + this.ttl) <= (System.currentTimeMillis() / 1000L))
                 || this.users.isEmpty()) {
 

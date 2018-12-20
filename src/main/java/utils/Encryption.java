@@ -4,7 +4,7 @@ public final class Encryption {
 
   public static String encryptDecryptXOR(String rawString) {
 
-    // If encryption is enabled in Config.
+    // Hvis kryptering er oprettet i Config
     //Selvom vi har implementeret kryptering, kan vi hurtigt slå det fra igen
     if (Config.getEncryption()) {
 
@@ -12,7 +12,7 @@ public final class Encryption {
       // TODO: Create a more complex code and store it somewhere better: FIX
       char[] key = Config.getEncryptionkey();
 
-      // Stringbuilder enables you to play around with strings and make useful stuff
+      // Stringbuilder tillader dig at prøve forskellige ting med strings og lave brugbare ting
       StringBuilder thisIsEncrypted = new StringBuilder();
 
       // TODO: This is where the magic of XOR is happening. Are you able to explain what is going on?: FIX

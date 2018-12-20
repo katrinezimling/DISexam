@@ -17,7 +17,7 @@ public class ReviewController {
 
     for (SolrDocument doc : documents) {
 
-      // Create a new review based on the SolR document
+      // Opretter et nyt review baseret på SolR document
       Review r =
           new Review(
               Integer.parseInt((String) doc.getFirstValue("id")),
@@ -42,7 +42,7 @@ public class ReviewController {
     // Laver søgningen i controlleren
     SolrDocumentList documents = SolrController.search("title", Integer.toString(id));
 
-    // Loop through the results, which are documents from SolR
+    // Loop gennem resultaterne, som er dokumenter fra SolR
     for (SolrDocument doc : documents) {
       // Laver et nyt review baseret på SolR dokumentet
       Review r =

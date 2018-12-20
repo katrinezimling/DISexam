@@ -25,7 +25,7 @@ public class LineItemController {
     // Laver SQL-kald
     String sql = "SELECT * FROM line_item where order_id=" + orderID;
 
-    // Do the query and initialize an empty list for the results
+    // Her laves query and initialiserer en tom liste til resultaterne
     ResultSet rs = dbCon.query(sql);
     ArrayList<LineItem> items = new ArrayList<>();
 
@@ -34,10 +34,10 @@ public class LineItemController {
       // Loop through the results from the DB
       while (rs.next()) {
 
-        // Construct a product base on the row data with product_id
+        // Konstruerer en produkt base på rækkedata med product_id
         Product product = ProductController.getProduct(rs.getInt("product_id"));
 
-        // Initialize an instance of the line item object
+        // Initialiserer et instans af line item objektet
         LineItem lineItem =
             new LineItem(
                 rs.getInt("id"),
@@ -52,7 +52,7 @@ public class LineItemController {
       System.out.println(ex.getMessage());
     }
 
-    // Returner listen, which might be empty
+    // Returner listen, som måske er tom
     return items;
   }
 
@@ -66,10 +66,10 @@ public class LineItemController {
       dbCon = new DatabaseController();
     }
 
-    // Get the ID of the product, since the user will not send it to us.
+    // Henter ID fra produktet, da brugeren ikke vil sende det til os
     lineItem.getProduct().setId(ProductController.getProductBySku(lineItem.getProduct().getSku()).getId());
 
-    // Update the ID of the product
+    // Opdaterer ID på produktet
 
     // Indsætter lineItem i databasen
     int lineItemID = dbCon.insert(

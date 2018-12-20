@@ -32,11 +32,11 @@ public class UserEndpoints {
   @Path("/{idUser}")
   public Response getUser(@PathParam("idUser") int idUser) {
 
-    // Get the ID and use it to get the user from the controller. Får en bruger ud fra ID
+    // Får en bruger ud fra ID, hvilket bruges til at hente brugeren fra Controller
     User user = UserController.getUser(idUser);
 
     // TODO: Add Encryption to JSON : FIX
-    // Convert the user object to json in order to return the object
+    // Konverterer brugerobjektet til json, for at kunne returnere objektet
     //Bruger google bibliotek Gson, der spytter json string ud, og returnerer tilbage til brugeren igen
     String json = new Gson().toJson(user);
 
@@ -63,7 +63,7 @@ public class UserEndpoints {
   //Henter alle brugere ud af systemet
   public Response getUsers() {
 
-    // Write to log that we are here
+    // Skriver til log at vi er her
     //Level bruges til at definerer hvor vigtig informationen er
     //Om det skal komme frem eller om det ikke er så vigtigt
     Log.writeLog(this.getClass().getName(), this, "Get all users", 0);
@@ -72,7 +72,7 @@ public class UserEndpoints {
     ArrayList<User> users = userCache.getUsers(false);
 
     // TODO: Add Encryption to JSON : FIX
-    // Transfer users to json in order to return it to the user
+    // Overfører brugere til json, for at kunne returnere det til brugeren
     String json = new Gson().toJson(users);
 
     //Laver kryptering
@@ -88,10 +88,10 @@ public class UserEndpoints {
   @Consumes(MediaType.APPLICATION_JSON)
   public Response createUser(String body) {
 
-    // Read the json from body and transfer it to a user class
+    // Læser json fra body og overfører det til user klassen
     User newUser = new Gson().fromJson(body, User.class);
 
-    // Use the controller to add the user
+    // Bruger controller for at tilføje brugeren
     User createUser = UserController.createUser(newUser);
 
     // Henter brugeren med det tilføjede ID og returnerer det
@@ -151,7 +151,6 @@ public class UserEndpoints {
     //Laver json om, så det kan læses
     //Laver instans af User-klassen
     User user = new Gson().fromJson(body, User.class);
-    //String token = UserController.updateUser(user);
 
    if (UserController.updateUser(user, user.getToken())){
      userCache.getUsers(true);

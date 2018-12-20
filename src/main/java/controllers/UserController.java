@@ -37,7 +37,7 @@ public class UserController {
     User user = null;
 
     try {
-      // Get first object, since we only have one
+      // Henter det første objekt, da vi kun har en
       if (rs.next()) {
         user =
                 new User(
@@ -56,7 +56,7 @@ public class UserController {
       System.out.println(ex.getMessage());
     }
 
-    // Return null
+    // Returner brugeren
     return user;
   }
 
@@ -75,12 +75,12 @@ public class UserController {
     // SQL statement
     String sql = "SELECT * FROM user";
 
-    // Do the query and initialyze an empty list for use if we don't get results
+    // Laver query og initialiserer en tom liste som kan bruges hvis vi ikke får resultaterne
     ResultSet rs = dbCon.query(sql);
     ArrayList<User> users = new ArrayList<User>();
 
     try {
-      // Loop through DB Data
+      // Loop igennem databasens data
       while (rs.next()) {
         User user =
                 new User(
@@ -107,7 +107,7 @@ public class UserController {
     // Skriver i log at vi er nået til dette step
     Log.writeLog(UserController.class.getName(), user, "Opretter en bruger i databasen", 0);
 
-    // Set creation time for user.
+    // Sætter creation time for bruger.
     user.setCreatedTime(System.currentTimeMillis() / 1000L);
 
     // Tjekker database forbindelsen

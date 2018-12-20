@@ -24,7 +24,7 @@ public final class SolrController {
    */
   public static HttpSolrClient getConnection() {
 
-    // Build a URL string with settings from config
+    // Bygger en URL string med settings fra config
     String urlString =
         "http://"
             + Config.getSolrHost()
@@ -52,12 +52,12 @@ public final class SolrController {
     if(connection == null)
       connection = getConnection();
 
-    // Search in Solr base on Field and Value
+    // Søger i SolR på felt og værdi
     //Søgningen er defineret i et bibliotek
     SolrQuery query = new SolrQuery();
     query.set("q", field + ":" + value);
 
-    // Create an empty document list
+    // Opretter en tom dokumentliste
     SolrDocumentList docList = new SolrDocumentList();
 
     try {

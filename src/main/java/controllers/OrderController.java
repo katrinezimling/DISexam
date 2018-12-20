@@ -27,7 +27,7 @@ public class OrderController {
             dbCon = new DatabaseController();
         }
 
-        // Build SQL string to query
+        // Bygger SQL string til query
         String sql = "SELECT * FROM orders where id=" + id;
 
         // Laver query i databasen og opretter et tomt objekt til resultaterne
@@ -55,7 +55,7 @@ public class OrderController {
                                 rs.getLong("created_at"),
                                 rs.getLong("updated_at"));
 
-                // Returnerer build order
+                // Returnerer order
                 return order;
             } else {
                 System.out.println("Der blev ikke fundet nogle ordrer");
@@ -137,12 +137,12 @@ public class OrderController {
         Connection connection = dbCon.getConnection();
         // TODO: Enable transactions in order for us to not save the order if somethings fails for some of the other inserts. FIX
         try {
-            // Save addresses to database and save them back to initial order instance
+            // Gemmer adressen i databasen og gemmer dem tilbage til det oprindelige ordre instans
             //Skal stå her, da det ellers ikke vil blive tjekket for fejl
             order.setBillingAddress(AddressController.createAddress(order.getBillingAddress()));
             order.setShippingAddress(AddressController.createAddress(order.getShippingAddress()));
 
-            // Save the user to the database and save them back to initial order instance
+            // Gemmer brugeren i databasen og gemmer tilbage til oprindelig instans
             order.setCustomer(UserController.createUser(order.getCustomer()));
 
             //Sætter til false, så den ikke bliver ved med at commit

@@ -29,7 +29,7 @@ public class ProductController {
     Product product = null;
 
     try {
-      // Get first row and create the object and return it
+      // Henter første række og opretter et objekt, som returneres
       if (rs.next()) {
         product =
             new Product(
@@ -49,7 +49,7 @@ public class ProductController {
       System.out.println(ex.getMessage());
     }
 
-    // Returner tomt objekt
+    // Returnerer tomt objekt
     return product;
   }
 
@@ -130,7 +130,7 @@ public class ProductController {
     // Skriver til log at vi er kommet til dette step
     Log.writeLog(ProductController.class.getName(), product, "Actually creating a product in DB", 0);
 
-    // Set creation time for produktet.
+    // Sætter creation time for produktet.
     product.setCreatedTime(System.currentTimeMillis() / 1000L);
 
     // Tjekker om der er forbindelse til databasen

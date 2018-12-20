@@ -10,7 +10,7 @@ public class Context implements ServletContextListener {
   @Override
   public void contextInitialized(ServletContextEvent servletContextEvent) {
 
-    // We init config in order to read the file and set all the variables.
+    // Vi init config for at kunne læse filen og indstille alle variablerne.
     try {
       Config.initializeConfig();
     } catch (IOException e) {
@@ -21,7 +21,7 @@ public class Context implements ServletContextListener {
       e.printStackTrace();
     }
 
-    // Here we can initialize our Logger class and write to our Logging.txt that the system has been
+    // Vi initaliserer vores klasse og skriver til vores logging,txt, at systemet er startet
     System.out.println("Context is open");
 
     // Skriv til log at vi starter systemet
@@ -31,7 +31,7 @@ public class Context implements ServletContextListener {
   @Override
   public void contextDestroyed(ServletContextEvent servletContextEvent) {
 
-    // Logging for when the system is stopped
+    // Logging for når systemet er stoppet
     System.out.println("Context is closed");
 
     // Skriv til log at vi lukker systemet

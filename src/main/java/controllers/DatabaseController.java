@@ -24,7 +24,7 @@ public class DatabaseController {
      */
     public static Connection getConnection() {
         try {
-            // Set the dataabase connect with the data from the config
+            // Sætter database forbindelsen med data fra config
             //Config læser ind fra en tekstfil
             String url =
                     "jdbc:mysql://"
@@ -38,10 +38,10 @@ public class DatabaseController {
             String user = Config.getDatabaseUsername();
             String password = Config.getDatabasePassword();
 
-            // Register the driver in order to use it
+            // Registrerer driver for at kunne bruge den
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
 
-            // create a connection to the database
+            // Opretter en forbindelse til databasen
             connection = DriverManager.getConnection(url, user, password);
 
         } catch (SQLException e) {
@@ -58,19 +58,19 @@ public class DatabaseController {
      */
     public ResultSet query(String sql) {
 
-        // Check if we have a connection
+        // Tjekker om der er forbindelse
         if (connection == null)
             connection = getConnection();
 
 
-        // We set the resultset as empty.
+        // Vi sætter resultset til at være tomt
         ResultSet rs = null;
 
         try {
-            // Build the statement as a prepared statement
+            // Bygger statement som en prepared statement
             PreparedStatement stmt = connection.prepareStatement(sql);
 
-            // Actually fire the query to the DB
+            // Her sker forespørgslen til databasen
             rs = stmt.executeQuery();
 
             // Return the results
@@ -79,13 +79,13 @@ public class DatabaseController {
             System.out.println(e.getMessage());
         }
 
-        // Return the resultset which at this point will be null
+        // Returnerer resultset, som i dette tilfælde er null
         return rs;
     }
 
     public int insert(String sql) {
 
-        // Set key to 0 as a start
+        // Sætter key til 0 som en start
         int result = 0;
 
         // Check that we have connection
@@ -93,14 +93,14 @@ public class DatabaseController {
             connection = getConnection();
 
         try {
-            // Build the statement up in a safe way
+            // Bygger statement på en sikker måde
             PreparedStatement statement =
                     connection.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 
             // Execute query
             result = statement.executeUpdate();
 
-            // Get our key back in order to update the user
+            // Henter vores nøgle tilbage for at kunne opdatere brugeren
             ResultSet generatedKeys = statement.getGeneratedKeys();
             if (generatedKeys.next()) {
                 return generatedKeys.getInt(1);
@@ -109,7 +109,7 @@ public class DatabaseController {
             System.out.println(e.getMessage());
         }
 
-        // Return the resultset which at this point will be null
+        // Returnerer resultset, som her vil være null
         return result;
     }
 
