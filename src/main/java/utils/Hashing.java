@@ -60,9 +60,4 @@ public final class Hashing {
     }
     return rawString;
   }
-
-  public String hashWithSalt (String str) {
-    String salt = str + this.salt;
-    return sha(salt);
-  }
 }

@@ -88,6 +88,7 @@ public class OrderController {
             while (rs.next()) {
 
                 // Perhaps we could optimize things a bit here and get rid of nested queries.
+                //Der skal laves 1 databasekald i stedet.
 
                 User user = UserController.getUser(rs.getInt("user_id"));
                 ArrayList<LineItem> lineItems = LineItemController.getLineItemsForOrder(rs.getInt("id"));

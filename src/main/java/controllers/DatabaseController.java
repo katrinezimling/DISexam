@@ -112,7 +112,5 @@ public class DatabaseController {
         // Returnerer resultset, som her vil være null
         return result;
     }
-
-
 }
 
